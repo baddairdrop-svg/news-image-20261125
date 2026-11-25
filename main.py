@@ -957,9 +957,10 @@ ICONS = {"building": icon_building, "train": icon_train,
 # Heroes: (scene, place, category, headline, summary, source, chip, hour,
 #          scheduled)
 HEROES = [
-    ("markets", "SEOUL", "MARKETS", "Asia stocks slide, KOSPI falls 4.7%",
-     "Samsung −8.0%, SK Hynix −7.5%, Nikkei −3.15%, Taiex −8.2% at the "
-     "close.", "WSJ · YONHAP", "00:00 UTC", 0.0, False),
+    ("markets", "SEOUL", "MARKETS", "Asia stocks slide, KOSPI falls "
+     "6.16%", "Samsung −9.87%, SK Hynix −11.05%, Nikkei −2.78%, "
+     "Taiex −4.80% at the close.", "WSJ · YONHAP", "00:00 UTC", 0.0,
+     False),
     ("rocket", "JIUQUAN", "SPACE", "Pakistan in orbit, first aboard "
      "Tiangong", "Shenzhou-24 lifts off at 00:18 with Muhammad Zeeshan "
      "Ali, 40, aboard.", "REUTERS", "00:18 UTC", 0.3, False),
@@ -968,10 +969,10 @@ HEROES = [
      "late-afternoon talks today.", "NATO", "21:00 UTC", 21.0, True),
 ]
 
-STATS = [("−4.7%", "KOSPI SLIDE"), ("1ST", "PAKISTANI IN ORBIT"),
-         ("30.4BN", "EUROS SOUGHT IN FUNDS"),
-         ("2,212", "SEOUL METRO JOBS SAVED"),
-         ("4TH", "POLITBURO MEMBER PROBED")]
+STATS = [("−6.16%", "KOSPI CLOSE"), ("1ST", "PAKISTANI IN ORBIT"),
+         ("4.9%", "AUSTRALIA INFLATION"),
+         ("2,212", "JOB CUTS SHELVED"),
+         ("25BN", "DOLLAR PAINT MERGER")]
 
 # Grid: (icon, place, category, headline, summary, source, scheduled)
 GRID = [
@@ -979,7 +980,7 @@ GRID = [
      "4th Politburo member probed since 2025 — Chen Jining, 62.",
      "REUTERS", False),
     ("train", "SEOUL", "LABOUR", "Seoul Metro strike off",
-     "2,212 job cuts shelved, 500 new hires, wages up 3.5%.",
+     "2,212 job cuts shelved, 500 new hires, wages up to 3.5%.",
      "YONHAP", False),
     ("flags", "BRUSSELS", "DIPLOMACY", "EU–Balkans summit",
      "5 leaders meet in Brussels, Serbia absent, plenary 17:00.",
@@ -1007,30 +1008,20 @@ GRID = [
      "OHCHR", True),
 ]
 
-# Also: (place, headline) — stories 14-35, one line each, all verified
+# Also: (place, headline) — stories 14-25, one line each, all verified
 # as happened or first reported on Wednesday 25 November 2026.
 ALSO = [
-    ("Dhaka", "garment workers win 36% wage rise"),
     ("Pyongyang", "North Korea expels Swiss envoy"),
-    ("Seoul", "births up 12.2%, fastest on record"),
-    ("Hong Kong", "HRW slams fire-anniversary curbs"),
     ("Canberra", "inflation hits 4.9%, core 3.8%"),
     ("Canberra", "Big Tech duty-of-care law passed"),
     ("Sydney", "ex-policeman guilty of double murder"),
     ("Canberra", "apology to LGBTQ veterans"),
     ("Alotau", "PNG islands run out of water"),
     ("London", "UK weighs 25bn paint-merger fixes"),
-    ("London", "GSK twice-yearly drug matches rival"),
-    ("London", "Britons having half as much sex"),
     ("London", "mid-life women least likely to quit smoking"),
-    ("Nottingham", "catalyst particles filmed moving"),
-    ("Iowa", "Army to detonate 5 tons of explosives"),
-    ("Pretoria", "Ramaphosa wins Farmgate court bid"),
     ("Cape Town", "Naspers earnings rise 12%"),
-    ("Enugu", "Nollywood veteran Pete Edochie dies at 79"),
     ("Ras Tanura", "Houthis claim refinery attack"),
     ("Amman", "man sentenced to death over killing"),
-    ("Space", "Hera releases first asteroid close-ups"),
     ("Southern Ocean", "magnitude 5.9 earthquake"),
 ]
 
@@ -1038,8 +1029,8 @@ DATE_CHECK = ["Zelenskyy ship claim — 24 Nov", "Nepal quake — 24 Nov",
               "Gaza Hamas chief — 24 Nov", "Giuliani medal — 24 Nov",
               "COP31 no deal — 24 Nov", "CIA breach — 24 Nov"]
 
-REGION_STRIP = ("35 STORIES · ASIA 9 · OCEANIA 7 · EUROPE 9 · "
-                "AMERICAS 2 · AFRICA 3 · MIDDLE EAST 2 · GLOBAL 3")
+REGION_STRIP = ("25 STORIES · ASIA 6 · OCEANIA 7 · EUROPE 6 · "
+                "AMERICAS 1 · AFRICA 1 · MIDDLE EAST 2 · GLOBAL 2")
 TIMELINE_BLOCKS = ["00–06 ASIA WAKES", "06–12 EUROPE AND ASIA",
                    "12–18 THE AMERICAS", "18–24 NIGHT"]
 FOOTER = ("Every story above happened or was first reported on "
@@ -1048,8 +1039,8 @@ FOOTER2 = ("Scheduled = announced for later on Wednesday 25 November "
            "2026. All times UTC. Map and drawings are original vector art.")
 FOOTER_SOURCES = ("Sources: Reuters · WSJ · Yonhap · NATO · European "
                   "Council · Kremlin · ABC News · European Parliament · "
-                  "PM of Australia · UN Women · PIB · OHCHR · AP · ABS · "
-                  "BBC · Guardian · HRW · USGS")
+                  "PM of Australia · UN Women · PIB · OHCHR · ABS · "
+                  "BBC · Guardian · PNG Haus Lain · USGS")
 
 # Pins: (story, lon, lat, label, label_dx, label_dy, pin_dx, pin_dy)
 PINS = [
@@ -1065,27 +1056,18 @@ PINS = [
     (10, 149.1, -35.3, "Canberra", 11, -6, 0, 0),
     (12, 77.2, 28.6, "New Delhi", -20, 14, 0, 0),
     (13, 6.1, 46.2, "Geneva", -24, 12, 0, 5),
-    (14, 90.4, 23.8, "", 0, 0, 0, 0),
-    (15, 125.8, 39.0, "", 0, 0, -7, -7),
-    (16, 127.0, 37.5, "", 0, 0, 14, -2),
-    (17, 114.2, 22.45, "", 0, 0, 0, 0),
-    (18, 149.1, -35.3, "", 0, 0, -8, -6),
-    (19, 149.1, -35.3, "", 0, 0, 8, -6),
-    (20, 151.2, -33.9, "", 0, 0, 5, 7),
-    (21, 149.1, -35.3, "", 0, 0, 0, 8),
-    (22, 150.5, -10.3, "", 0, 0, 0, 0),
-    (23, -0.12, 51.5, "", 0, 0, -10, -6),
-    (24, -0.12, 51.5, "", 0, 0, 2, -9),
-    (25, -0.12, 51.5, "", 0, 0, -10, 6),
-    (26, -0.12, 51.5, "", 0, 0, 6, 7),
-    (27, -1.15, 52.95, "", 0, 0, -6, -12),
-    (28, -91.4, 40.8, "", 0, 0, 0, 0),
-    (29, 28.2, -25.7, "", 0, 0, 0, 0),
-    (30, 18.4, -33.9, "", 0, 0, 0, 0),
-    (31, 7.5, 6.4, "", 0, 0, 0, 0),
-    (32, 50.2, 26.6, "", 0, 0, 0, 0),
-    (33, 35.9, 31.9, "", 0, 0, 0, 0),
-    (35, 170.94, -63.09, "", 0, 0, 0, -3),
+    (14, 125.8, 39.0, "", 0, 0, -7, -7),
+    (15, 149.1, -35.3, "", 0, 0, -8, -6),
+    (16, 149.1, -35.3, "", 0, 0, 8, -6),
+    (17, 151.2, -33.9, "", 0, 0, 5, 7),
+    (18, 149.1, -35.3, "", 0, 0, 0, 8),
+    (19, 150.5, -10.3, "", 0, 0, 0, 0),
+    (20, -0.12, 51.5, "", 0, 0, -6, -4),
+    (21, -0.12, 51.5, "", 0, 0, 6, 4),
+    (22, 18.4, -33.9, "", 0, 0, 0, 0),
+    (23, 50.2, 26.6, "", 0, 0, 0, 0),
+    (24, 35.9, 31.9, "", 0, 0, 0, 0),
+    (25, 170.94, -63.09, "", 0, 0, 0, -3),
 ]
 
 # Coarse land rectangles (lon_min, lon_max, lat_min, lat_max).
@@ -1216,7 +1198,7 @@ def draw_masthead(c):
     c.hline(0, 96, W, GOLD, 2)
     c.text(24, 60, "THE WORLD IN 24 HOURS", SERIF, SERIF_EM, SERIF_ASC,
            44, WHITE)
-    c.text(24, 83, "ONE DAY · ONE PAGE · 35 STORIES", SANSB, SANSB_EM,
+    c.text(24, 83, "ONE DAY · ONE PAGE · 25 STORIES", SANSB, SANSB_EM,
            SANSB_ASC, 10, GOLD, tracking=1.8)
     c.text_right(W - 24, 32, "WEDNESDAY", SANSB, SANSB_EM, SANSB_ASC,
                  10.5, GOLD, tracking=2.2)
@@ -1337,21 +1319,21 @@ def draw_grid_card(c, x, y, w, h, num, item):
            tracking=0.6)
 
 
-REGION_COLORS = [("ASIA", 9, NAVY), ("OCEANIA", 7, (46, 110, 100)),
-                 ("EUROPE", 9, BURGUNDY), ("AMERICAS", 2, GOLD),
-                 ("AFRICA", 3, (160, 90, 30)),
+REGION_COLORS = [("ASIA", 6, NAVY), ("OCEANIA", 7, (46, 110, 100)),
+                 ("EUROPE", 6, BURGUNDY), ("AMERICAS", 1, GOLD),
+                 ("AFRICA", 1, (160, 90, 30)),
                  ("MIDDLE EAST", 2, (140, 60, 90)),
-                 ("GLOBAL", 3, (110, 80, 140))]
+                 ("GLOBAL", 2, (110, 80, 140))]
 
 
 def draw_also(c):
     c.text(24, 718, "ALSO ON WEDNESDAY 25 NOVEMBER", SANSB, SANSB_EM,
            SANSB_ASC, 11, INK, tracking=1.2)
-    c.text_right(W - 24, 718, "22 more verified stories", SANS, SANS_EM,
+    c.text_right(W - 24, 718, "12 more verified stories", SANS, SANS_EM,
                  SANS_ASC, 9, GREY)
     c.hline(24, 724, W - 48, HAIR, 0.8)
     cols = [24, 357, 690]
-    rows = [8, 7, 7]
+    rows = [4, 4, 4]
     i = 0
     for ci, nrows in enumerate(rows):
         for r in range(nrows):
@@ -1368,49 +1350,49 @@ def draw_also(c):
 
 
 def draw_map_band(c):
-    c.text(24, 830, "WHERE IT HAPPENED", SANSB, SANSB_EM, SANSB_ASC, 12,
+    c.text(24, 790, "WHERE IT HAPPENED", SANSB, SANSB_EM, SANSB_ASC, 12,
            INK, tracking=1.2)
-    c.text_right(664, 830, "Pins = story numbers", SANS, SANS_EM,
+    c.text_right(664, 790, "Pins = story numbers", SANS, SANS_EM,
                  SANS_ASC, 9, GREY)
-    draw_map(c, 24, 838, 640, 86, PINS)
-    c.text(688, 848, "BY REGION", SANSB, SANSB_EM, SANSB_ASC, 10, NAVY,
+    draw_map(c, 24, 798, 640, 96, PINS)
+    c.text(688, 808, "BY REGION", SANSB, SANSB_EM, SANSB_ASC, 10, NAVY,
            tracking=1.0)
     for i, (name, count, col) in enumerate(REGION_COLORS):
         lx = 688 if i < 4 else 842
-        ry = 862 + (i % 4) * 13
+        ry = 822 + (i % 4) * 13
         c.rect(lx, ry - 8, 10, 10, col)
         c.text(lx + 16, ry, "%s — %d" % (name, count), SANS, SANS_EM,
                SANS_ASC, 9.5, INK)
-    c.text(688, 918, "Nos. 11 & 34 are global — no pin.", SANS, SANS_EM,
+    c.text(688, 880, "No. 11 is global — no pin.", SANS, SANS_EM,
            SANS_ASC, 8.5, GREY)
 
 
 def draw_datecheck(c):
-    y, h = 932, 50
+    y, h = 902, 56
     c.rect(24, y, W - 48, h, CREAM2)
     c.frame(24, y, W - 48, h, BURGUNDY, 1.2)
     c.rect(24, y, 150, h, BURGUNDY)
-    c.text_center(99, y + 24, "DATE CHECK", SERIF, SERIF_EM, SERIF_ASC,
+    c.text_center(99, y + 25, "DATE CHECK", SERIF, SERIF_EM, SERIF_ASC,
                   15, WHITE)
-    c.text_center(99, y + 36, "Excluded as the", SANS, SANS_EM, SANS_ASC,
+    c.text_center(99, y + 38, "Excluded as the", SANS, SANS_EM, SANS_ASC,
                   8, PAPER)
-    c.text_center(99, y + 46, "wrong day", SANS, SANS_EM, SANS_ASC, 8,
+    c.text_center(99, y + 48, "wrong day", SANS, SANS_EM, SANS_ASC, 8,
                   PAPER)
     colw = (W - 48 - 150 - 24) // 2
     for i, item in enumerate(DATE_CHECK):
         col = i // 3
         row = i % 3
         ix = 186 + col * colw
-        iy = y + 16 + row * 13
+        iy = y + 17 + row * 14
         c.text(ix, iy, "X", SANSB, SANSB_EM, SANSB_ASC, 8.5, BURGUNDY)
         c.text(ix + 12, iy, item, SANS, SANS_EM, SANS_ASC, 9, INK)
 
 
 def draw_footer(c):
-    c.text_center(W // 2, 992, FOOTER, SANS, SANS_EM, SANS_ASC, 9.5, GREY)
-    c.text_center(W // 2, 1004, FOOTER2, SANS, SANS_EM, SANS_ASC, 9.5,
+    c.text_center(W // 2, 968, FOOTER, SANS, SANS_EM, SANS_ASC, 9.5, GREY)
+    c.text_center(W // 2, 982, FOOTER2, SANS, SANS_EM, SANS_ASC, 9.5,
                   GREY)
-    c.text_center(W // 2, 1018, FOOTER_SOURCES, SANSB, SANSB_EM,
+    c.text_center(W // 2, 998, FOOTER_SOURCES, SANSB, SANSB_EM,
                   SANSB_ASC, 8, INK, tracking=0.3)
 
 
@@ -1419,19 +1401,19 @@ def _validate():
     any text would overflow its card, or the story numbering is off.
     Runs before drawing, so a bad string can never reach the image."""
     fonts = [SERIF, SERIFR, SANSB, SANS]
-    strings = ["THE WORLD IN 24 HOURS", "ONE DAY · ONE PAGE · 35 STORIES",
+    strings = ["THE WORLD IN 24 HOURS", "ONE DAY · ONE PAGE · 25 STORIES",
                "WEDNESDAY", "25 NOVEMBER", "2026 · ALL TIMES UTC",
                REGION_STRIP, "THE DAY IN UTC",
                "Dots mark the three lead stories at their hour",
                "ALSO ON WEDNESDAY 25 NOVEMBER",
-               "22 more verified stories",
+               "12 more verified stories",
                "WHERE IT HAPPENED", "Pins = story numbers", "BY REGION",
-               "Nos. 11 & 34 are global — no pin.", "DATE CHECK",
+               "No. 11 is global — no pin.", "DATE CHECK",
                "Excluded as the", "wrong day", "SCHEDULED", "X",
                FOOTER, FOOTER2, FOOTER_SOURCES]
     strings += TIMELINE_BLOCKS + DATE_CHECK
     strings += ["%02d" % h for h in (0, 6, 12, 18, 24)]
-    strings += [str(n) for n in range(1, 36)]
+    strings += [str(n) for n in range(1, 26)]
     for (_sc, place, cat, head, summ, src, chip, _h, _s) in HEROES:
         strings += [place, cat, head, summ, src, chip]
     for (num, label) in STATS:
@@ -1466,12 +1448,12 @@ def _validate():
         assert text_width(lab, SANSB, SANSB_EM, 9, 0.6) <= 238, lab
     for item in DATE_CHECK:
         assert text_width(item, SANS, SANS_EM, 9) <= 389, item
-    assert len(HEROES) == 3 and len(GRID) == 10 and len(ALSO) == 22
-    assert len(PINS) == 33 and len(DATE_CHECK) == 6
-    assert sum(cnt for (_n, cnt, _c) in REGION_COLORS) == 35
+    assert len(HEROES) == 3 and len(GRID) == 10 and len(ALSO) == 12
+    assert len(PINS) == 24 and len(DATE_CHECK) == 6
+    assert sum(cnt for (_n, cnt, _c) in REGION_COLORS) == 25
     assert sum(1 for h in HEROES if h[8]) + \
         sum(1 for g in GRID if g[6]) == 6
-    assert all(p[0] not in (11, 34) for p in PINS)
+    assert all(p[0] != 11 for p in PINS)
 
 
 def build():
