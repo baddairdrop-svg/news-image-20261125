@@ -1032,7 +1032,7 @@ ALSO = [
     ("Ras Tanura", "Houthis claim refinery attack"),
     ("Amman", "man sentenced to death over killing"),
     ("Jerusalem", "opposition advances Oct 7 probe vote"),
-    ("Space", "Hera releases first Dimorphos images"),
+    ("Space", "Hera releases its first Dimorphos images"),
     ("Southern Ocean", "magnitude 5.9 earthquake"),
 ]
 
