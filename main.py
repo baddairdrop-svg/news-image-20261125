@@ -1019,9 +1019,9 @@ ALSO = [
     ("Canberra", "apology to LGBTQ veterans"),
     ("Alotau", "PNG islands run out of water"),
     ("London", "UK weighs 25bn paint-merger fixes"),
-    ("London", "mid-life women least likely to quit smoking"),
     ("London", "GSK twice-yearly drug matches own monthly Nucala"),
     ("Kyiv", "Russian strikes cut power in five regions"),
+    ("London", "Ofgem raises energy price cap 26%"),
     ("Washington", "US proposes new tariffs on 14 partners"),
     ("Washington", "second judge blocks birthright order"),
     ("New York", "Wall Street closes mixed after AI rout"),
@@ -1029,11 +1029,11 @@ ALSO = [
     ("Cartagena", "forces rescue all supermarket hostages"),
     ("Cape Town", "Naspers earnings rise 12%"),
     ("Cape Town", "Ramaphosa wins Farmgate court bid"),
+    ("Giza", "31 killed in tanker fire near Cairo"),
     ("Ras Tanura", "Houthis claim refinery attack"),
     ("Amman", "man sentenced to death over killing"),
     ("Jerusalem", "opposition advances Oct 7 probe vote"),
     ("Space", "Hera releases its first Dimorphos images"),
-    ("Southern Ocean", "magnitude 5.9 earthquake"),
 ]
 
 DATE_CHECK = ["Zelenskyy ship claim — 24 Nov", "Nepal quake — 24 Nov",
@@ -1041,7 +1041,7 @@ DATE_CHECK = ["Zelenskyy ship claim — 24 Nov", "Nepal quake — 24 Nov",
               "COP31 no deal — 24 Nov", "CIA breach — 24 Nov"]
 
 REGION_STRIP = ("36 STORIES · ASIA 7 · OCEANIA 7 · EUROPE 8 · "
-                "AMERICAS 6 · AFRICA 2 · MIDDLE EAST 3 · GLOBAL 3")
+                "AMERICAS 6 · AFRICA 3 · MIDDLE EAST 3 · GLOBAL 2")
 TIMELINE_BLOCKS = ["00–06 ASIA WAKES", "06–12 EUROPE AND ASIA",
                    "12–18 THE AMERICAS", "18–24 NIGHT"]
 FOOTER = ("Every story above happened or was first reported on "
@@ -1051,7 +1051,7 @@ FOOTER2 = ("Scheduled = announced for later on Wednesday 25 November "
 FOOTER_SOURCES = ("Sources: Reuters · WSJ · Yonhap · NATO · European "
                   "Council · Kremlin · ABC News · European Parliament · "
                   "PM of Australia · UN Women · PIB · OHCHR · ABS · "
-                  "BBC · Guardian · PNG Haus Lain · USGS · AP")
+                  "BBC · Guardian · PNG Haus Lain · Ofgem · AP")
 
 # Pins: (story, lon, lat, label, label_dx, label_dy, pin_dx, pin_dy)
 PINS = [
@@ -1075,9 +1075,9 @@ PINS = [
     (19, 149.1, -35.3, "", 0, 0, 0, 8),
     (20, 150.5, -10.3, "", 0, 0, 0, 0),
     (21, -0.12, 51.5, "", 0, 0, -6, -4),
-    (22, -0.12, 51.5, "", 0, 0, 6, 4),
-    (23, -0.12, 51.5, "", 0, 0, 0, -11),
-    (24, 30.52, 50.45, "", 0, 0, 0, 0),
+    (22, -0.12, 51.5, "", 0, 0, 0, -11),
+    (23, 30.52, 50.45, "", 0, 0, 0, 0),
+    (24, -0.12, 51.5, "", 0, 0, -11, 9),
     (25, -77.04, 38.90, "", 0, 0, -9, -5),
     (26, -77.04, 38.90, "", 0, 0, 10, 7),
     (27, -74.01, 40.71, "", 0, 0, -2, -6),
@@ -1085,10 +1085,10 @@ PINS = [
     (29, -75.51, 10.42, "", 0, 0, 0, 0),
     (30, 18.4, -33.9, "", 0, 0, 0, 0),
     (31, 18.4, -33.9, "", 0, 0, 9, -6),
-    (32, 50.2, 26.6, "", 0, 0, 0, 0),
-    (33, 35.9, 31.9, "", 0, 0, 8, -5),
-    (34, 35.21, 31.77, "", 0, 0, -8, 5),
-    (36, 170.94, -63.09, "", 0, 0, 0, -3),
+    (32, 31.18, 30.12, "", 0, 0, -9, -6),
+    (33, 50.2, 26.6, "", 0, 0, 0, 0),
+    (34, 35.9, 31.9, "", 0, 0, 8, -5),
+    (35, 35.21, 31.77, "", 0, 0, -8, 5),
 ]
 
 # Coarse land rectangles (lon_min, lon_max, lat_min, lat_max).
@@ -1230,8 +1230,16 @@ def draw_masthead(c):
 
 
 def draw_region_strip(c):
-    c.text_center(W // 2, 117, REGION_STRIP, SANSB, SANSB_EM, SANSB_ASC,
-                  11, NAVY, tracking=1.2)
+    total = sum(cnt for (_n, cnt, _c) in REGION_COLORS)
+    x = 24.0
+    y, h = 106, 15
+    for (name, count, col) in REGION_COLORS:
+        wseg = (W - 48) * count / total
+        c.rect(x, y, wseg, h, col)
+        tc = INK if col == GOLD else WHITE
+        c.text_center(x + wseg / 2, y + 11.5, "%s %d" % (name, count),
+                      SANSB, SANSB_EM, SANSB_ASC, 8, tc, tracking=0.2)
+        x += wseg
     c.hline(24, 124, W - 48, HAIR, 0.8)
 
 
@@ -1342,9 +1350,9 @@ def draw_grid_card(c, x, y, w, h, num, item):
 
 REGION_COLORS = [("ASIA", 7, NAVY), ("OCEANIA", 7, (46, 110, 100)),
                  ("EUROPE", 8, BURGUNDY), ("AMERICAS", 6, GOLD),
-                 ("AFRICA", 2, (160, 90, 30)),
+                 ("AFRICA", 3, (160, 90, 30)),
                  ("MIDDLE EAST", 3, (140, 60, 90)),
-                 ("GLOBAL", 3, (110, 80, 140))]
+                 ("GLOBAL", 2, (110, 80, 140))]
 
 
 def draw_also(c):
@@ -1384,7 +1392,7 @@ def draw_map_band(c):
         c.rect(lx, ry - 8, 10, 10, col)
         c.text(lx + 16, ry, "%s — %d" % (name, count), SANS, SANS_EM,
                SANS_ASC, 9.5, INK)
-    c.text(688, 918, "Nos. 11 & 35 are global — no pin.", SANS, SANS_EM,
+    c.text(688, 918, "Nos. 11 & 36 are global — no pin.", SANS, SANS_EM,
            SANS_ASC, 8.5, GREY)
 
 
@@ -1429,7 +1437,7 @@ def _validate():
                "ALSO ON WEDNESDAY 25 NOVEMBER",
                "23 more verified stories",
                "WHERE IT HAPPENED", "Pins = story numbers", "BY REGION",
-               "Nos. 11 & 35 are global — no pin.", "DATE CHECK",
+               "Nos. 11 & 36 are global — no pin.", "DATE CHECK",
                "Excluded as the", "wrong day", "SCHEDULED", "X",
                FOOTER, FOOTER2, FOOTER_SOURCES]
     strings += TIMELINE_BLOCKS + DATE_CHECK
@@ -1463,7 +1471,11 @@ def _validate():
         assert text_width(line, SANSB, SANSB_EM, 8.5) <= 295, line
     for (_num, label) in STATS:
         assert text_width(label, SANS, SANS_EM, 8, 0.6) <= 204, label
-    assert text_width(REGION_STRIP, SANSB, SANSB_EM, 11, 1.2) <= CW
+    _total = sum(cnt for (_n, cnt, _c) in REGION_COLORS)
+    for (name, count, _col) in REGION_COLORS:
+        _seg = (W - 48) * count / _total
+        assert text_width("%s %d" % (name, count), SANSB, SANSB_EM, 8,
+                          0.2) <= _seg - 4, name
     assert text_width(FOOTER_SOURCES, SANSB, SANSB_EM, 8, 0.3) <= CW
     for lab in TIMELINE_BLOCKS:
         assert text_width(lab, SANSB, SANSB_EM, 9, 0.6) <= 238, lab
@@ -1474,7 +1486,7 @@ def _validate():
     assert sum(cnt for (_n, cnt, _c) in REGION_COLORS) == 36
     assert sum(1 for h in HEROES if h[8]) + \
         sum(1 for g in GRID if g[6]) == 6
-    assert all(p[0] not in (11, 35) for p in PINS)
+    assert all(p[0] not in (11, 36) for p in PINS)
 
 
 def build():
