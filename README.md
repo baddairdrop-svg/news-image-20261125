@@ -1,4 +1,4 @@
-# World News in One Image — 25 November 2026
+# The World in 24 Hours — 25 November 2026
 
 [![make.fun · news-image-20261125](https://make.fun/badge/news-image-20261125.svg)](https://make.fun/bounty/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
 [![rank](https://make.fun/badge/news-image-20261125/baddairdrop-svg/news-image-20261125/rank.svg)](https://make.fun/bounty/news-image-20261125/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
@@ -11,27 +11,39 @@ entered by **@badd-airdrop2**.
 
 ## The image
 
-A newspaper front page, 1024x1024: a header naming the day, six panels
-(one per main story, each with a drawn scene, a headline, one big figure
-and one short sub-line), and a footer strip with three smaller stories.
+"THE WORLD IN 24 HOURS": the page is one day running midnight to
+midnight, 1024x1024. A black masthead, a region-count strip, a
+four-block timeline spine (00-06 / 06-12 / 12-18 / 18-24 UTC) with a
+red dot at each hero's real hour, three chronological hero cards with
+drawn scenes, a five-number stat strip, a ten-card grid numbered 4-13,
+a dotted world map with numbered pins, and a red DATE CHECK box.
 
-1. **Space** — Pakistan's first astronaut reaches orbit aboard
-   Shenzhou-24 to the Tiangong station.
-2. **Ukraine** — Zelenskyy confirms Ukraine struck Russian ships: a
-   cargo ship hit in the Gulf of Finland, a warship sunk off Benghazi.
-3. **Markets** — AI stocks tumble on tariff fears: Nvidia -6%, Micron
-   -11%, Nasdaq -1.5%.
-4. **Gaza** — an Israeli strike kills Hamas security chief Naeem Abu
-   Nahel in Gaza City.
-5. **Yemen** — airstrikes kill dozens: 17 in Hodeida, 26 in Lahj.
-6. **Nepal** — a magnitude 5.6 earthquake in Koshi province, near the
-   Tibet border, at 07:17.
+Every story on the page happened or was first reported on Wednesday
+25 November 2026, as the named outlets reported it. Big stories from
+24 November (the Zelenskyy ship claim, the Nepal quake, the Gaza
+Hamas chief killing, the Giuliani medal, COP31 ending with no deal,
+the CIA breach) are listed in the DATE CHECK box as excluded, not
+presented as the day's news.
 
-Footer: Malaysia to return 6,500+ Rohingya refugees to Myanmar; AIDS
-deaths at 570,000, the lowest in 20+ years; Trump awards the Medal of
-Freedom to Giuliani. Sources: Reuters, AP, Euronews.
+1. **Asia stocks slide** — Kospi -4.7%, Samsung -8.0%, SK Hynix
+   -7.5%, Nikkei -3.15%, Taiex -8.2%. (WSJ / Yonhap, 00:00 UTC)
+2. **Pakistan in orbit** — Shenzhou-24 lifts off at 00:18 UTC;
+   Muhammad Zeeshan Ali, 40, the first Pakistani in orbit, aboard
+   Tiangong. (Reuters)
+3. **Trump meets NATO chief** — President Trump hosts Mark Rutte at
+   Mar-a-Lago in late-afternoon talks. (NATO, 21:00 UTC)
+
+Grid: Shanghai pledges loyalty (4th Politburo member probed since
+2025); Seoul Metro strike called off (2,212 job cuts shelved, 500
+new hires); EU-Balkans summit in Brussels; Putin meets the Brunei
+Sultan in Moscow; Flinders Island bushfire warning; EU seeks
+30.4bn euros for borders and asylum; Solomon Islands sign a
+security pact with Australia as top partner; 16 Days of Activism
+begins; India's Nayi Chetna 5.0 launches; the UN business and human
+rights forum closes in Geneva.
 
 No quotes, numbers or faces are invented, and no real person is drawn.
+Map and drawings are original vector art.
 
 ## How it runs
 

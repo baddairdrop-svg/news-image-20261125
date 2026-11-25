@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
-"""news-image-20261125: draw one image summing up the world news of
+"""news-image-20261125 v2: draw one image summing up the world news of
 Wednesday 25 November 2026 and write it to /output/entry.png.
 
 Pure Python 3 standard library only (struct, zlib, os, sys): no network,
-no fonts on disk, no randomness, no clock. The picture is a newspaper
-front page: a header naming the day, six panels (one per main story),
-each with a drawn scene, a headline, one big figure and one short
-sub-line, plus a footer strip with three smaller stories. Every fact
-comes from the research brief for this day; no quotes, numbers or faces
-are invented, and no real person is drawn.
+no fonts on disk, no randomness, no clock. Concept: "THE WORLD IN 24
+HOURS" - the page is one day running midnight to midnight. A black
+masthead, a region-count strip, a four-block timeline spine (00-06 /
+06-12 / 12-18 / 18-24 UTC) with a red dot at each hero's real hour, three
+chronological hero cards with drawn scenes, a five-number stat strip, a
+ten-card grid (numbered 4-13, continuing the heroes), a dotted world map
+with numbered pins, and a red DATE CHECK box listing the big stories
+that were EXCLUDED because they happened on 24 November, not the 25th.
+
+Every story on the page was verified against a source dated 25 November
+2026 (Reuters, WSJ, Yonhap, NATO, European Council, Kremlin, ABC News,
+European Parliament, PM of Australia, UN Women, PIB, OHCHR). No quotes,
+numbers or faces are invented, and no real person is drawn. All text on
+the page is English.
 
 Run it the way the grader does:
     mkdir -p out && MAKEFUN_OUTPUT_DIR=out python3 main.py
@@ -23,12 +31,14 @@ import zlib
 WIDTH = 1024
 HEIGHT = 1024
 
-# --- palette (newspaper front page) -------------------------------------
+# --- palette ------------------------------------------------------------
 PAPER = (246, 241, 227)
 INK = (27, 42, 65)
 NAVY = (20, 38, 63)
 NAVY_DARK = (13, 27, 46)
+BLACK = (10, 10, 12)
 RED = (180, 35, 24)
+RED_LIGHT = (253, 235, 232)
 BLUE = (29, 78, 137)
 GOLD = (201, 162, 39)
 GREEN = (30, 122, 52)
@@ -37,8 +47,8 @@ ORANGE = (217, 119, 6)
 PURPLE = (107, 33, 168)
 GREY = (107, 114, 128)
 LIGHT_GREY = (203, 213, 225)
+MAP_DOT = (90, 110, 140)
 WHITE = (255, 255, 255)
-SKY = (135, 206, 235)
 SKY_DARK = (30, 58, 95)
 SAND = (222, 184, 135)
 DUSK = (232, 121, 71)
@@ -222,6 +232,10 @@ def draw_text_center(c, cx, y, text, scale, color):
     draw_text(c, cx - text_width(text, scale) // 2, y, text, scale, color)
 
 
+def draw_text_right(c, rx, y, text, scale, color):
+    draw_text(c, rx - text_width(text, scale), y, text, scale, color)
+
+
 def wrap_text(text, max_chars):
     """Greedy word wrap; returns a list of lines, each <= max_chars."""
     lines = []
@@ -254,17 +268,53 @@ def draw_block(c, x, y, width, text, scale, color, align="left"):
     return yy
 
 
-# --- scenes (one drawn picture per story, no faces) ------------------------
+# --- hero scenes (one drawn picture per hero, no faces) -------------------
+# One consistent style: flat vector shapes, deep colours, one light source
+# (sun / moon / tower light), tiny human silhouettes only for scale.
+
+def scene_markets(c, ox, oy, w, h):
+    """Seoul at dawn: skyline with N Seoul Tower, red bars falling."""
+    c.rect(ox, oy, w, h, NAVY_DARK)
+    # first light on the horizon
+    c.rect(ox, oy + 96, w, 6, (120, 60, 40))
+    c.rect(ox, oy + 102, w, 4, (160, 90, 50))
+    # N Seoul Tower, left
+    c.line(ox + 42, oy + 118, ox + 42, oy + 34, LIGHT_GREY, 3)
+    c.circle(ox + 42, oy + 30, 10, LIGHT_GREY)
+    c.circle(ox + 42, oy + 30, 4, GOLD)
+    # skyline silhouettes
+    for bx, bw, bh in ((0, 34, 34), (58, 26, 48), (88, 40, 30),
+                       (132, 30, 56), (166, 44, 38), (214, 28, 52),
+                       (246, 38, 32), (288, 37, 46)):
+        c.rect(ox + bx, oy + h - bh, bw, bh, BLACK)
+    for wx, wy in ((8, 128), (66, 118), (140, 108), (176, 122),
+                   (222, 112), (256, 126), (296, 116)):
+        c.rect(ox + wx, oy + wy, 4, 5, GOLD)
+    # falling red bars
+    heights = (86, 74, 58, 66, 40, 24)
+    tops = []
+    for i, bh in enumerate(heights):
+        bx = ox + 14 + i * 48
+        c.rect(bx, oy + 108 - bh, 30, bh, RED)
+        tops.append((bx + 15, oy + 108 - bh))
+    for (x0, y0), (x1, y1) in zip(tops, tops[1:]):
+        c.line(x0, y0, x1, y1, WHITE, 3)
+    # big down arrow, right
+    c.line(ox + 296, oy + 14, ox + 296, oy + 52, RED, 6)
+    c.triangle(ox + 280, oy + 44, ox + 312, oy + 44, ox + 296, oy + 72, RED)
+
+
 def scene_space(c, ox, oy, w, h):
+    """Shenzhou-24 lifts off for Tiangong; Pakistan and China flags."""
     c.rect(ox, oy, w, h, SKY_DARK)
     for sx, sy in ((20, 15), (60, 40), (100, 12), (240, 20), (280, 50),
                    (300, 90), (40, 90), (90, 70), (200, 8), (130, 55)):
         c.rect(ox + sx, oy + sy, 3, 3, WHITE)
-    # space station, top right
-    c.rect(ox + 240, oy + 22, 56, 14, LIGHT_GREY)
-    c.rect(ox + 212, oy + 24, 26, 10, BLUE)
-    c.rect(ox + 298, oy + 24, 26, 10, BLUE)
-    c.rect(ox + 264, oy + 14, 8, 8, GOLD)
+    # space station, top right (kept clear of the UTC chip at top right)
+    c.rect(ox + 206, oy + 22, 56, 14, LIGHT_GREY)
+    c.rect(ox + 178, oy + 24, 26, 10, BLUE)
+    c.rect(ox + 264, oy + 24, 26, 10, BLUE)
+    c.rect(ox + 230, oy + 14, 8, 8, GOLD)
     # rocket, centre
     c.rect(ox + 150, oy + 18, 28, 72, WHITE)
     c.triangle(ox + 150, oy + 18, ox + 178, oy + 18, ox + 164, oy + 2, RED)
@@ -284,195 +334,507 @@ def scene_space(c, ox, oy, w, h):
         c.rect(ox + 62 + dx, oy + 128 + dy, 3, 3, GOLD)
 
 
-def scene_sea(c, ox, oy, w, h):
-    c.rect(ox, oy, w, 62, (226, 232, 240))
-    c.rect(ox, oy + 62, w, h - 62, (58, 110, 165))
-    c.rect(ox + 30, oy + 14, 60, 12, WHITE)
-    c.rect(ox + 210, oy + 26, 70, 12, WHITE)
-    # drone, top right
-    c.rect(ox + 236, oy + 30, 24, 10, INK)
-    for dx, dy in ((232, 26), (260, 26), (232, 40), (260, 40)):
-        c.circle(ox + dx, oy + dy, 5, GREY)
-    c.line(ox + 248, oy + 40, ox + 230, oy + 62, INK, 2)
-    # cargo ship
-    for i, col in enumerate((RED, GOLD, GREEN, BLUE)):
-        c.rect(ox + 64 + i * 34, oy + 64, 30, 24, col)
-    c.rect(ox + 200, oy + 56, 34, 32, WHITE)
-    c.rect(ox + 60, oy + 88, 200, 26, NAVY_DARK)
-    c.rect(ox + 60, oy + 88, 200, 5, RED)
-    # waves and map pins
-    for wx in (20, 90, 160, 240, 290):
-        c.line(ox + wx, oy + 128, ox + wx + 22, oy + 128, WHITE, 2)
-    for px, py in ((36, 122), (292, 126)):
-        c.circle(ox + px, oy + py, 8, RED)
-        c.triangle(ox + px - 6, oy + py + 4, ox + px + 6, oy + py + 4,
-                   ox + px, oy + py + 16, RED)
-        c.circle(ox + px, oy + py, 3, WHITE)
-
-
-def scene_markets(c, ox, oy, w, h):
-    c.rect(ox, oy, w, h, (238, 238, 230))
-    # falling bars, left to right
-    heights = (108, 92, 68, 82, 44, 28)
-    tops = []
-    for i, bh in enumerate(heights):
-        bx = ox + 24 + i * 46
-        c.rect(bx, oy + 138 - bh, 32, bh, RED)
-        tops.append((bx + 16, oy + 138 - bh))
-    for (x0, y0), (x1, y1) in zip(tops, tops[1:]):
-        c.line(x0, y0, x1, y1, INK, 3)
-    # big down arrow, right
-    c.line(ox + 296, oy + 18, ox + 296, oy + 66, RED, 6)
-    c.triangle(ox + 280, oy + 58, ox + 312, oy + 58, ox + 296, oy + 88, RED)
-    # tariff tag
-    c.rect(ox + 16, oy + 12, 116, 28, RED)
-    draw_text(c, ox + 26, oy + 19, "TARIFFS", 2, WHITE)
-    # axis, bottom left
-    c.line(ox + 12, oy + 138, ox + 316, oy + 138, INK, 2)
-
-
-def scene_gaza(c, ox, oy, w, h):
+def scene_summit(c, ox, oy, w, h):
+    """Mar-a-Lago at dusk: warm sky, white villa, palms, two flags."""
     c.rect(ox, oy, w, 52, DUSK)
-    c.rect(ox, oy + 52, w, 48, PURPLE)
-    c.rect(ox, oy + 100, w, h - 100, NAVY_DARK)
-    # skyline silhouettes
-    for bx, bw, bh in ((0, 44, 52), (48, 30, 70), (82, 52, 44),
-                       (138, 34, 64), (176, 46, 50), (226, 36, 74),
-                       (266, 62, 58)):
-        c.rect(ox + bx, oy + 158 - bh, bw, bh, INK)
-    for wx, wy in ((12, 122), (58, 104), (96, 128), (148, 108),
-                   (190, 124), (240, 100), (282, 116)):
-        c.rect(ox + wx, oy + wy, 4, 4, GOLD)
-    # smoke column rising from one building
-    c.circle(ox + 208, oy + 96, 10, ORANGE)
-    c.circle(ox + 208, oy + 82, 13, GREY)
-    c.circle(ox + 204, oy + 64, 12, LIGHT_GREY)
-    c.circle(ox + 210, oy + 46, 10, GREY)
-    c.circle(ox + 206, oy + 30, 8, LIGHT_GREY)
-
-
-def scene_yemen(c, ox, oy, w, h):
-    c.rect(ox, oy, w, h, SAND)
-    c.circle(ox + 44, oy + 26, 18, GOLD)
-    # telecom tower, right
-    c.line(ox + 268, oy + 148, ox + 288, oy + 40, INK, 3)
-    c.line(ox + 308, oy + 148, ox + 288, oy + 40, INK, 3)
-    for yy in (120, 96, 72):
-        c.line(ox + 274, oy + yy, ox + 302, oy + yy, INK, 2)
-    c.line(ox + 288, oy + 40, ox + 288, oy + 22, INK, 3)
-    c.circle(ox + 288, oy + 18, 4, RED)
-    # road, diagonal
-    c.line(ox, oy + 148, ox + 240, oy + 108, (90, 90, 96), 16)
-    # bus and truck on the road
-    c.rect(ox + 60, oy + 108, 58, 22, WHITE)
-    c.rect(ox + 66, oy + 112, 46, 8, BLUE)
-    c.rect(ox + 150, oy + 100, 44, 22, (120, 72, 20))
-    c.rect(ox + 194, oy + 108, 20, 14, INK)
-    for wx in (70, 100, 160, 185, 205):
-        c.circle(ox + wx, oy + 132, 5, INK)
-    # dunes
-    c.triangle(ox, oy + h, ox + 120, oy + h, ox + 60, oy + h - 22, (198, 158, 105))
-    c.triangle(ox + 180, oy + h, ox + 328, oy + h, ox + 260, oy + h - 18,
-               (198, 158, 105))
-
-
-def scene_nepal(c, ox, oy, w, h):
-    c.rect(ox, oy, w, 96, SKY)
-    c.circle(ox + 282, oy + 24, 16, GOLD)
-    # back mountain, front mountain with snow cap
-    c.triangle(ox + 10, oy + 128, ox + 150, oy + 128, ox + 80, oy + 34,
-               LIGHT_GREY)
-    c.triangle(ox + 120, oy + 128, ox + 320, oy + 128, ox + 220, oy + 18, INK)
-    c.triangle(ox + 198, oy + 42, ox + 242, oy + 42, ox + 220, oy + 18, WHITE)
-    c.triangle(ox + 66, oy + 48, ox + 94, oy + 48, ox + 80, oy + 34, WHITE)
-    # cracked ground
-    c.rect(ox, oy + 128, w, 30, (120, 96, 64))
-    c.line(ox + 40, oy + 128, ox + 70, oy + 142, INK, 3)
-    c.line(ox + 70, oy + 142, ox + 52, oy + 156, INK, 3)
-    c.line(ox + 200, oy + 128, ox + 230, oy + 140, INK, 3)
-    c.line(ox + 230, oy + 140, ox + 214, oy + 158, INK, 3)
-    # seismograph strip
-    c.rect(ox + 16, oy + 96, 296, 26, WHITE)
-    pts = [(16, 109), (40, 109), (52, 100), (64, 118), (76, 104),
-           (88, 114), (110, 109), (140, 109), (152, 98), (164, 120),
-           (176, 104), (188, 114), (210, 109), (250, 109), (262, 100),
-           (274, 118), (286, 109), (312, 109)]
-    for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
-        c.line(ox + x0, oy + y0, ox + x1, oy + y1, RED, 2)
+    c.rect(ox, oy + 52, w, 46, PURPLE)
+    c.rect(ox, oy + 98, w, h - 98, NAVY_DARK)
+    # low sun
+    c.circle(ox + 282, oy + 46, 16, GOLD)
+    c.circle(ox + 282, oy + 46, 10, (250, 220, 130))
+    # palm trees
+    for px, lean in ((36, -1), (296, 1)):
+        c.line(ox + px, oy + 148, ox + px + lean * 10, oy + 78, (60, 40, 20), 4)
+        for dx, dy in ((-26, -14), (-14, -24), (0, -28), (14, -24), (26, -14)):
+            c.line(ox + px + lean * 10, oy + 78,
+                   ox + px + lean * 10 + dx, oy + 78 + dy, GREEN, 3)
+    # white villa
+    c.rect(ox + 108, oy + 92, 110, 56, WHITE)
+    c.triangle(ox + 100, oy + 92, ox + 226, oy + 92, ox + 163, oy + 66, RED)
+    c.rect(ox + 156, oy + 52, 14, 16, WHITE)
+    c.triangle(ox + 152, oy + 52, ox + 174, oy + 52, ox + 163, oy + 40, RED)
+    for wx in (118, 140, 162, 184, 206):
+        c.rect(ox + wx, oy + 104, 10, 18, NAVY)
+        c.circle(ox + wx + 5, oy + 104, 5, NAVY)
+    c.rect(ox + 158, oy + 122, 10, 26, INK)
+    # two flags on poles in front of the villa
+    for fx, flag in ((96, "us"), (232, "nato")):
+        c.line(ox + fx, oy + 148, ox + fx, oy + 82, INK, 2)
+        if flag == "us":
+            for i in range(7):
+                c.rect(ox + fx + 2, oy + 84 + i * 4, 26,
+                       2, RED if i % 2 == 0 else WHITE)
+            c.rect(ox + fx + 2, oy + 84, 12, 12, BLUE)
+        else:
+            c.rect(ox + fx + 2, oy + 84, 26, 28, BLUE)
+            c.triangle(ox + fx + 15, oy + 88, ox + fx + 15, oy + 108,
+                       ox + fx + 10, oy + 98, WHITE)
+            c.triangle(ox + fx + 5, oy + 98, ox + fx + 25, oy + 98,
+                       ox + fx + 15, oy + 93, WHITE)
+    # two small suited figures for scale, no faces
+    for fx in (146, 172):
+        c.circle(ox + fx + 4, oy + 130, 4, INK)
+        c.rect(ox + fx, oy + 134, 8, 14, INK)
 
 
 SCENES = {
-    "space": scene_space,
-    "sea": scene_sea,
     "markets": scene_markets,
-    "gaza": scene_gaza,
-    "yemen": scene_yemen,
-    "nepal": scene_nepal,
+    "space": scene_space,
+    "summit": scene_summit,
 }
 
-# kicker, colour, scene, headline, big figure, sub-line
-PANELS = [
-    ("SPACE", BLUE, "space", "PAKISTAN REACHES SPACE", "1ST",
-     "PAKISTANI IN ORBIT ABOARD SHENZHOU-24 TO TIANGONG"),
-    ("UKRAINE", TEAL, "sea", "ZELENSKYY CONFIRMS SEA STRIKES", "2 SHIPS",
-     "GULF OF FINLAND HIT, WARSHIP SUNK OFF BENGHAZI"),
-    ("MARKETS", RED, "markets", "AI STOCKS TUMBLE ON TARIFF FEARS", "-6%",
-     "NVIDIA -6%, MICRON -11%, NASDAQ -1.5%"),
-    ("GAZA", PURPLE, "gaza", "ISRAELI STRIKE KILLS HAMAS SECURITY CHIEF",
-     "GAZA CITY", "NAEEM ABU NAHEL KILLED IN WESTERN GAZA CITY"),
-    ("YEMEN", ORANGE, "yemen", "AIRSTRIKES KILL DOZENS IN YEMEN", "17 + 26",
-     "KILLED IN HODEIDA AND LAHJ, HOUTHIS NEAR ADEN"),
-    ("NEPAL", GREEN, "nepal", "EARTHQUAKE SHAKES EASTERN NEPAL", "5.6",
-     "MAGNITUDE QUAKE IN KOSHI, NEAR TIBET, AT 07:17"),
+
+# --- grid pictograms (26x26, one per grid card) ---------------------------
+def icon_building(c, x, y, color):
+    c.rect(x + 5, y + 6, 16, 20, color)
+    for wy in (10, 16, 22):
+        for wx in (9, 15, 21):
+            c.rect(x + wx, y + wy, 2, 2, WHITE)
+
+
+def icon_train(c, x, y, color):
+    c.rect(x + 4, y + 4, 18, 16, color)
+    c.rect(x + 7, y + 7, 12, 6, WHITE)
+    c.circle(x + 9, y + 22, 3, INK)
+    c.circle(x + 17, y + 22, 3, INK)
+    c.line(x, y + 24, x + 26, y + 24, INK, 2)
+
+
+def icon_flags(c, x, y, color):
+    c.line(x + 6, y + 24, x + 6, y + 4, INK, 2)
+    c.line(x + 19, y + 24, x + 19, y + 4, INK, 2)
+    c.rect(x + 8, y + 4, 10, 8, BLUE)
+    c.rect(x + 11, y + 7, 2, 2, GOLD)
+    c.rect(x + 21, y + 4, 10, 8, color)
+    c.rect(x + 24, y + 7, 2, 2, WHITE)
+
+
+def icon_dome(c, x, y, color):
+    c.rect(x + 4, y + 16, 18, 10, color)
+    c.triangle(x + 4, y + 16, x + 22, y + 16, x + 13, y + 4, color)
+    c.circle(x + 13, y + 4, 2, GOLD)
+    c.rect(x + 8, y + 20, 3, 6, WHITE)
+    c.rect(x + 15, y + 20, 3, 6, WHITE)
+
+
+def icon_flame(c, x, y, color):
+    c.triangle(x + 13, y + 2, x + 24, y + 22, x + 2, y + 22, color)
+    c.triangle(x + 13, y + 12, x + 19, y + 24, x + 7, y + 24, GOLD)
+
+
+def icon_bank(c, x, y, color):
+    c.triangle(x + 2, y + 10, x + 24, y + 10, x + 13, y + 2, color)
+    for cx in (5, 11, 17):
+        c.rect(x + cx, y + 12, 3, 10, color)
+    c.rect(x + 2, y + 22, 22, 3, color)
+
+
+def icon_shield(c, x, y, color):
+    c.rect(x + 5, y + 3, 16, 12, color)
+    c.triangle(x + 5, y + 15, x + 21, y + 15, x + 13, y + 25, color)
+    c.line(x + 9, y + 10, x + 12, y + 13, WHITE, 2)
+    c.line(x + 12, y + 13, x + 18, y + 6, WHITE, 2)
+
+
+def icon_megaphone(c, x, y, color):
+    c.triangle(x + 4, y + 10, x + 4, y + 18, x + 22, y + 24, color)
+    c.triangle(x + 4, y + 10, x + 22, y + 24, x + 22, y + 4, color)
+    c.rect(x + 2, y + 10, 3, 8, INK)
+    c.rect(x + 8, y + 18, 4, 7, INK)
+
+
+def icon_sprout(c, x, y, color):
+    c.line(x + 13, y + 24, x + 13, y + 12, color, 3)
+    c.triangle(x + 13, y + 12, x + 1, y + 4, x + 13, y + 3, color)
+    c.triangle(x + 13, y + 12, x + 25, y + 4, x + 13, y + 3, color)
+
+
+def icon_globe(c, x, y, color):
+    c.circle(x + 13, y + 13, 10, color)
+    c.circle(x + 13, y + 13, 6, WHITE)
+    c.line(x + 3, y + 13, x + 23, y + 13, WHITE, 1)
+    c.line(x + 13, y + 3, x + 13, y + 23, WHITE, 1)
+
+
+ICONS = {
+    "building": icon_building,
+    "train": icon_train,
+    "flags": icon_flags,
+    "dome": icon_dome,
+    "flame": icon_flame,
+    "bank": icon_bank,
+    "shield": icon_shield,
+    "megaphone": icon_megaphone,
+    "sprout": icon_sprout,
+    "globe": icon_globe,
+}
+
+
+# --- story data (all verified against a source dated 25 Nov 2026) --------
+# Heroes: (number, scene, tag, headline line 1, headline line 2,
+#          summary line 1, summary line 2, source, UTC chip, UTC hour)
+HEROES = [
+    (1, "markets", "SEOUL / MARKETS",
+     "ASIA STOCKS SLIDE", "KOSPI FALLS 4.7%",
+     "SAMSUNG -8.0%, SK HYNIX -7.5%,", "NIKKEI -3.15%, TAIEX -8.2%.",
+     "WSJ / YONHAP", "00:00 UTC", 0.0),
+    (2, "space", "JIUQUAN / SPACE",
+     "PAKISTAN IN ORBIT", "FIRST ABOARD TIANGONG",
+     "SHENZHOU-24 LIFTS OFF AT 00:18,", "MUHAMMAD ZEESHAN ALI, 40, ABOARD.",
+     "REUTERS", "00:18 UTC", 0.3),
+    (3, "summit", "FLORIDA / DIPLOMACY",
+     "TRUMP MEETS NATO CHIEF", "AT MAR-A-LAGO TODAY",
+     "PRESIDENT TRUMP HOSTS MARK RUTTE", "IN LATE-AFTERNOON TALKS TODAY.",
+     "NATO", "21:00 UTC", 21.0),
 ]
 
-FOOTER = [
-    (TEAL, "ROHINGYA",
-     "MALAYSIA TO RETURN 6,500+ REFUGEES TO MYANMAR"),
-    (RED, "HEALTH",
-     "AIDS DEATHS AT 570,000, LOWEST IN 20+ YEARS"),
-    (GOLD, "USA",
-     "TRUMP AWARDS MEDAL OF FREEDOM TO GIULIANI"),
+# Stat strip: (big number, label) - hard news numbers only.
+STATS = [
+    ("-4.7%", "KOSPI SLIDE"),
+    ("1ST", "PAKISTANI IN ORBIT"),
+    ("30.4BN", "EUROS SOUGHT FOR BORDERS"),
+    ("2,212", "SEOUL METRO JOBS SAVED"),
+    ("4TH", "POLITBURO MEMBER PROBED"),
 ]
 
+# Grid cards 4-13: (number, icon, accent, tag, headline,
+#                   summary line 1, summary line 2, source)
+GRID = [
+    (4, "building", BLUE, "SHANGHAI / POLITICS",
+     "SHANGHAI PLEDGES LOYALTY",
+     "4TH POLITBURO MEMBER PROBED", "SINCE 2025 - CHEN JINING, 62",
+     "REUTERS"),
+    (5, "train", TEAL, "SEOUL / LABOUR",
+     "SEOUL METRO STRIKE OFF",
+     "2,212 JOB CUTS SHELVED, 500", "NEW HIRES, WAGES UP 3.5%",
+     "YONHAP"),
+    (6, "flags", GOLD, "BRUSSELS / DIPLOMACY",
+     "EU-BALKANS SUMMIT",
+     "6 LEADERS MEET IN BRUSSELS,", "SERBIA ABSENT, PLENARY 18:00",
+     "EUROPEAN COUNCIL"),
+    (7, "dome", PURPLE, "MOSCOW / DIPLOMACY",
+     "PUTIN MEETS BRUNEI SULTAN",
+     "STATE VISIT IN MOSCOW, DAY 2", "SULTAN ON 24-25 NOV VISIT",
+     "KREMLIN"),
+    (8, "flame", ORANGE, "TASMANIA / WILDFIRE",
+     "FLINDERS FIRE WARNING",
+     "TOO LATE TO LEAVE, FIRE AT", "3,000-4,000 HA, LIGHTNING",
+     "ABC NEWS"),
+    (9, "bank", BLUE, "STRASBOURG / EU",
+     "EU SEEKS 30.4BN FOR BORDERS",
+     "MIGRATION FUNDS BRIEF, 11:00", "ASYLUM 13.31, BORDERS 17.12",
+     "EUROPEAN PARLIAMENT"),
+    (10, "shield", GREEN, "CANBERRA / SECURITY",
+     "SOLOMONS SIGN SECURITY PACT",
+     "AUSTRALIA TOP SECURITY PARTNER", "CHINA PACT FACES PHASE-OUT",
+     "PM OF AUSTRALIA"),
+    (11, "megaphone", RED, "GLOBAL / CAMPAIGN",
+     "16 DAYS OF ACTIVISM",
+     "UN CAMPAIGN STARTS TODAY,", "RUNS TO 10 DEC, END IMPUNITY",
+     "UN WOMEN"),
+    (12, "sprout", PURPLE, "NEW DELHI / CAMPAIGN",
+     "NAYI CHETNA 5.0 LAUNCHES",
+     "INDIA GENDER DRIVE STARTS,", "RUNS TO 23 DEC, 15 MINISTRIES",
+     "PIB"),
+    (13, "globe", TEAL, "GENEVA / RIGHTS",
+     "UN RIGHTS FORUM CLOSES",
+     "BUSINESS FORUM ENDS AFTER", "3 DAYS, CLOSING PLENARY TODAY",
+     "OHCHR"),
+]
 
-def draw_panel(c, px, py, panel):
-    kicker, color, scene, headline, stat, sub = panel
-    w, h = 328, 384
-    c.rect(px, py, w, h, WHITE)
-    c.border(px, py, w, h, INK, 3)
-    c.rect(px + 3, py + 3, w - 6, 30, color)
-    draw_text_center(c, px + w // 2, py + 11, kicker, 2, WHITE)
-    SCENES[scene](c, px + 3, py + 33, w - 6, 158)
-    draw_block(c, px + 12, py + 198, w - 24, headline, 3, INK)
-    draw_text(c, px + 12, py + 286, stat, 4, color)
-    draw_block(c, px + 12, py + 322, w - 24, sub, 2, GREY)
-    c.rect(px + 3, py + h - 7, w - 6, 4, color)
+# Date-check box: stories excluded because they are 24 Nov, not 25 Nov.
+DATE_CHECK = [
+    "ZELENSKYY SHIP CLAIM - 24 NOV",
+    "NEPAL QUAKE - 24 NOV",
+    "GAZA HAMAS CHIEF - 24 NOV",
+    "GIULIANI MEDAL - 24 NOV",
+    "COP31 NO DEAL - 24 NOV",
+    "CIA BREACH - 24 NOV",
+]
+
+REGION_STRIP = "13 STORIES - ASIA 5 - OCEANIA 2 - EUROPE 4 - AMERICAS 1 - GLOBAL 1"
+
+REGION_ROWS = [
+    ("ASIA", 5, RED),
+    ("OCEANIA", 2, TEAL),
+    ("EUROPE", 4, BLUE),
+    ("AMERICAS", 1, GOLD),
+    ("GLOBAL", 1, PURPLE),
+]
+
+TIMELINE_BLOCKS = [
+    "00-06 ASIA WAKES",
+    "06-12 EUROPE AND THE GULF",
+    "12-18 THE AMERICAS",
+    "18-24 NIGHT",
+]
+
+# Coarse land mask: (lon_min, lon_max, lat_min, lat_max) rectangles.
+LAND = [
+    (-168, -95, 50, 72), (-125, -66, 30, 50), (-105, -80, 14, 30),
+    (-58, -20, 60, 78),
+    (-78, -50, -5, 10), (-72, -42, -35, -5), (-70, -52, -55, -35),
+    (-17, 32, 8, 35), (-10, 40, -35, 8), (43, 50, -25, -12),
+    (-10, 40, 36, 70), (40, 180, 45, 75), (35, 60, 12, 42),
+    (68, 90, 8, 35), (95, 110, 5, 28), (75, 135, 20, 53),
+    (95, 141, -10, 6), (113, 154, -39, -11), (145, 149, -44, -40),
+    (166, 178, -47, -34), (129, 146, 31, 45), (-5, 2, 50, 59),
+    (-22, -14, 63, 67),
+]
+
+# Map pins: (story number, lon, lat, offset_x, offset_y) - offsets keep
+# crowded pins apart; a thin leader line joins pin to its true spot.
+PINS = [
+    (1, 127.0, 37.5, 0, 0),       # Seoul - Asia stocks
+    (2, 98.5, 41.0, 0, 0),        # Jiuquan - Pakistan launch
+    (3, -80.0, 27.0, 0, 0),       # Florida - Trump / Rutte
+    (4, 121.5, 31.0, -12, 8),     # Shanghai
+    (5, 127.0, 37.5, 14, -10),    # Seoul - metro strike
+    (6, 4.4, 50.8, 0, 0),         # Brussels
+    (7, 37.6, 55.8, 0, 0),        # Moscow
+    (8, 148.0, -40.0, 0, 0),      # Flinders Island
+    (9, 7.8, 48.6, 14, 10),       # Strasbourg
+    (10, 149.1, -35.3, 14, -10),  # Canberra
+    (12, 77.2, 28.6, 0, 0),       # New Delhi
+    (13, 6.1, 46.2, -14, 12),     # Geneva
+]
+
+FOOTER_SOURCES = ("SOURCES: REUTERS, WSJ, YONHAP, NATO, EUROPEAN COUNCIL, "
+                  "KREMLIN, ABC NEWS, EUROPEAN PARLIAMENT, PM OF AUSTRALIA, "
+                  "UN WOMEN, PIB, OHCHR")
+
+
+def _all_strings():
+    out = [REGION_STRIP, FOOTER_SOURCES]
+    out += TIMELINE_BLOCKS + DATE_CHECK
+    for h in HEROES:
+        out += [h[2], h[3], h[4], h[5], h[6], h[7], h[8]]
+    for num, label in STATS:
+        out += [num, label]
+    for g in GRID:
+        out += [g[3], g[4], g[5], g[6], g[7]]
+    for name, _n, _c in REGION_ROWS:
+        out.append(name)
+    out += ["THE WORLD IN ", "24", " HOURS", "ONE DAY - ONE PAGE",
+            "WEDNESDAY", "25 NOVEMBER 2026", "ALL TIMES UTC",
+            "DATE CHECK - EXCLUDED AS THE WRONG DAY",
+            "WHERE IT HAPPENED",
+            "EVERY STORY ABOVE HAPPENED OR WAS FIRST REPORTED ON "
+            "WEDNESDAY 25 NOVEMBER 2026,",
+            "AS THE NAMED OUTLETS REPORTED IT. MAP AND DRAWINGS ARE "
+            "ORIGINAL VECTOR ART."]
+    return out
+
+
+def _validate():
+    """Fail loudly (before drawing) on any character the font lacks,
+    any truncation marker, or any line that would overflow its box."""
+    for s in _all_strings():
+        if "..." in s:
+            raise ValueError("truncated text: %r" % s)
+        for ch in s:
+            if ch not in FONT:
+                raise ValueError("no glyph for %r in %r" % (ch, s))
+    for _n, _s, tag, h1, h2, _a, _b, _src in [
+            (g[0], g[1], g[3], g[4], None, None, None, None)
+            for g in GRID]:
+        if text_width(tag, 1) > 130:
+            raise ValueError("tag too wide: %r" % tag)
+        if text_width(h1, 1) > 180:
+            raise ValueError("headline too wide: %r" % h1)
+    for _n, _sc, _t, h1, h2, _a, _b, _src, _chip, _h in HEROES:
+        if text_width(h1, 2) > 301 or text_width(h2, 2) > 301:
+            raise ValueError("hero headline too wide: %r / %r" % (h1, h2))
+
+
+# --- layout -----------------------------------------------------------------
+MX = 16            # side margin
+CW = 992           # content width
+
+
+def draw_masthead(c):
+    c.rect(0, 0, WIDTH, 92, BLACK)
+    # title: "THE WORLD IN " white + "24" red + " HOURS" white, scale 4
+    x = MX
+    for text, color in (("THE WORLD IN ", WHITE), ("24", RED),
+                        (" HOURS", WHITE)):
+        draw_text(c, x, 18, text, 4, color)
+        x += text_width(text, 4)
+    draw_text(c, MX, 58, "ONE DAY - ONE PAGE", 2, WHITE)
+    draw_text_right(c, WIDTH - MX, 14, "WEDNESDAY", 2, WHITE)
+    draw_text_right(c, WIDTH - MX, 34, "25 NOVEMBER 2026", 3, GOLD)
+    draw_text_right(c, WIDTH - MX, 62, "ALL TIMES UTC", 1, WHITE)
+    c.rect(0, 92, WIDTH, 4, RED)
+
+
+def draw_region_strip(c):
+    draw_text_center(c, WIDTH // 2, 102, REGION_STRIP, 1, INK)
+
+
+def draw_timeline(c):
+    y = 124
+    block_w = CW // 4
+    for i, label in enumerate(TIMELINE_BLOCKS):
+        cx = MX + i * block_w + block_w // 2
+        draw_text_center(c, cx, y + 4, label, 1, INK)
+    # hour ticks every 3 hours
+    for h in range(0, 25, 3):
+        tx = MX + h * CW // 24
+        c.line(tx, y + 22, tx, y + 30, GREY, 1)
+    # red progress line
+    c.rect(MX, y + 25, CW, 3, RED)
+    # hero dots at their real UTC hour
+    for _n, _sc, _t, _a, _b, _s1, _s2, _src, _chip, hour in HEROES:
+        dx = MX + int(hour * CW / 24)
+        c.circle(dx, y + 26, 4, RED)
+        c.circle(dx, y + 26, 1, WHITE)
+
+
+def draw_hero(c, x, w, hero):
+    num, scene, tag, h1, h2, s1, s2, source, chip, _hour = hero
+    y0 = 164
+    h = 272
+    c.rect(x, y0, w, h, WHITE)
+    c.border(x, y0, w, h, INK, 2)
+    SCENES[scene](c, x + 2, y0 + 2, w - 4, 148)
+    # number badge
+    c.circle(x + 20, y0 + 20, 13, RED)
+    draw_text(c, x + 14, y0 + 13, str(num), 2, WHITE)
+    # UTC chip, top right of the scene
+    c.rect(x + w - 72, y0 + 8, 64, 16, RED)
+    draw_text(c, x + w - 67, y0 + 10, chip, 1, WHITE)
+    # tag, headlines, summary, source
+    draw_text(c, x + 12, y0 + 158, tag, 1, RED)
+    draw_text(c, x + 12, y0 + 172, h1, 2, INK)
+    draw_text(c, x + 12, y0 + 190, h2, 2, INK)
+    draw_text(c, x + 12, y0 + 212, s1, 1, GREY)
+    draw_text(c, x + 12, y0 + 221, s2, 1, GREY)
+    draw_text(c, x + 12, y0 + 240, source, 1, INK)
+    c.rect(x, y0 + h - 4, w, 4, RED)
+
+
+def draw_stats(c):
+    y0 = 442
+    h = 64
+    c.rect(MX, y0, CW, h, WHITE)
+    c.border(MX, y0, CW, h, INK, 2)
+    for i, (num, label) in enumerate(STATS):
+        x0 = MX + (i * CW) // 5
+        x1 = MX + ((i + 1) * CW) // 5
+        if i:
+            c.line(x0, y0 + 8, x0, y0 + h - 8, LIGHT_GREY, 1)
+        cx = (x0 + x1) // 2
+        draw_text_center(c, cx, y0 + 10, num, 3, RED)
+        draw_text_center(c, cx, y0 + 38, label, 1, INK)
+
+
+def draw_grid(c):
+    for i, g in enumerate(GRID):
+        num, icon, accent, tag, headline, s1, s2, source = g
+        col, row = i % 5, i // 5
+        x = MX + col * 200
+        y = 512 + row * 106
+        w, h = 192, 98
+        c.rect(x, y, w, h, WHITE)
+        c.border(x, y, w, h, INK, 2)
+        # number badge
+        c.rect(x + 6, y + 6, 14, 14, RED)
+        num_w = text_width(str(num), 1)
+        draw_text(c, x + 6 + (14 - num_w) // 2, y + 8, str(num), 1, WHITE)
+        # pictogram + tag
+        ICONS[icon](c, x + 26, y + 4, accent)
+        draw_text(c, x + 56, y + 11, tag, 1, RED)
+        # headline, summary, source
+        draw_text(c, x + 6, y + 38, headline, 1, INK)
+        draw_text(c, x + 6, y + 52, s1, 1, GREY)
+        draw_text(c, x + 6, y + 63, s2, 1, GREY)
+        draw_text(c, x + 6, y + 80, source, 1, INK)
+        c.rect(x + 2, y + h - 5, w - 4, 3, accent)
+
+
+def _is_land(lon, lat):
+    for lo0, lo1, la0, la1 in LAND:
+        if lo0 <= lon <= lo1 and la0 <= lat <= la1:
+            return True
+    return False
+
+
+def draw_map(c):
+    y0 = 722
+    h = 124
+    c.rect(MX, y0, CW, h, WHITE)
+    c.border(MX, y0, CW, h, INK, 2)
+    map_x, map_y, map_w, map_h = 24, 730, 636, 112
+
+    def px(lon):
+        return map_x + int((lon + 180) * map_w / 360)
+
+    def py(lat):
+        return map_y + int((78 - lat) * map_h / 136)
+
+    # dotted land (dense sampling so continents read at strip height)
+    lon = -178
+    while lon <= 178:
+        lat = 75
+        while lat >= -57:
+            if _is_land(lon, lat):
+                c.rect(px(lon) - 1, py(lat) - 1, 2, 2, MAP_DOT)
+            lat -= 5
+        lon += 3
+    # numbered pins (leader line first, then the pin)
+    for num, lon, lat, dx, dy in PINS:
+        tx, ty = px(lon), py(lat)
+        cx, cy = tx + dx, ty + dy
+        if dx or dy:
+            c.line(tx, ty, cx, cy, GREY, 1)
+        c.circle(cx, cy, 8, RED)
+        num_w = text_width(str(num), 1)
+        draw_text(c, cx - num_w // 2, cy - 3, str(num), 1, WHITE)
+    # divider + region counts on the right
+    c.line(668, y0 + 8, 668, y0 + h - 8, LIGHT_GREY, 1)
+    draw_text(c, 676, y0 + 6, "WHERE IT HAPPENED", 2, INK)
+    for i, (name, n, color) in enumerate(REGION_ROWS):
+        ry = y0 + 28 + i * 19
+        c.rect(676, ry + 1, 12, 12, color)
+        draw_text(c, 694, ry, "%s %d" % (name, n), 2, INK)
+
+
+def draw_date_check(c):
+    y0 = 852
+    h = 160
+    c.rect(MX, y0, CW, h, RED_LIGHT)
+    c.border(MX, y0, CW, h, RED, 3)
+    draw_text(c, MX + 16, y0 + 12,
+              "DATE CHECK - EXCLUDED AS THE WRONG DAY", 2, RED)
+    for i, item in enumerate(DATE_CHECK):
+        col, row = i % 2, i // 2
+        x = MX + 16 + col * 504
+        y = y0 + 40 + row * 16
+        draw_text(c, x, y, "X", 1, RED)
+        draw_text(c, x + 12, y, item, 1, INK)
+    draw_text(c, MX + 16, y0 + 98,
+              "EVERY STORY ABOVE HAPPENED OR WAS FIRST REPORTED ON "
+              "WEDNESDAY 25 NOVEMBER 2026,", 1, INK)
+    draw_text(c, MX + 16, y0 + 111,
+              "AS THE NAMED OUTLETS REPORTED IT. MAP AND DRAWINGS ARE "
+              "ORIGINAL VECTOR ART.", 1, INK)
+    draw_text(c, MX + 16, y0 + 130, FOOTER_SOURCES, 1, GREY)
 
 
 def draw():
+    _validate()
     c = Canvas(WIDTH, HEIGHT, PAPER)
-    # header
-    c.rect(0, 0, WIDTH, 104, NAVY)
-    draw_text_center(c, WIDTH // 2, 16, "WORLD NEWS IN ONE IMAGE", 4, WHITE)
-    draw_text_center(c, WIDTH // 2, 58, "WEDNESDAY 25 NOVEMBER 2026", 3, GOLD)
-    c.rect(0, 100, WIDTH, 4, RED)
-    # six panels, 2 rows x 3 columns
-    for i, panel in enumerate(PANELS):
-        px = 8 + (i % 3) * 336
-        py = 112 + (i // 3) * 392
-        draw_panel(c, px, py, panel)
-    # footer strip
-    fy = 896
-    c.rect(0, fy, WIDTH, 4, RED)
-    c.rect(0, fy + 4, WIDTH, HEIGHT - fy - 4, WHITE)
-    for i, (color, label, text) in enumerate(FOOTER):
-        fx = 8 + i * 336
-        c.rect(fx + 4, fy + 20, 16, 16, color)
-        draw_text(c, fx + 28, fy + 21, label, 2, INK)
-        draw_block(c, fx + 4, fy + 46, 320, text, 2, INK)
-    draw_text_center(c, WIDTH // 2, 992, "SOURCES: REUTERS, AP, EURONEWS",
-                     2, GREY)
+    draw_masthead(c)
+    draw_region_strip(c)
+    draw_timeline(c)
+    hero_xs = [MX, 349, 682]
+    hero_ws = [325, 325, 326]
+    for x, w, hero in zip(hero_xs, hero_ws, HEROES):
+        draw_hero(c, x, w, hero)
+    draw_stats(c)
+    draw_grid(c)
+    draw_map(c)
+    draw_date_check(c)
     return c
 
 
