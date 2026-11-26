@@ -1043,6 +1043,39 @@ ALSO = [
     ("Space", "Hera releases its first Dimorphos images"),
 ]
 
+# Fields per story 1-43 (computed counts drive the fields line).
+FIELDS = ["Markets", "Space", "Diplomacy",
+          "Politics", "Labour", "Diplomacy", "Diplomacy", "Disaster",
+          "Migration", "Security", "Rights", "Rights", "Rights",
+          "Diplomacy", "Society", "Sport", "Economy", "Economy",
+          "Tech", "Justice", "Rights", "Humanitarian", "Business",
+          "Health", "War", "Energy", "Politics", "Justice", "Trade",
+          "Justice", "Markets", "Security", "Crime", "Trade",
+          "Culture", "Business", "Justice", "Disaster", "Business",
+          "War", "Justice", "Politics", "Space"]
+
+# Confidence per hero / grid story: OFFICIAL = official record or
+# statement, REPORTED = wire report, CLAIM = one side's statement.
+HERO_CONF = ["OFFICIAL", "OFFICIAL", "OFFICIAL"]
+GRID_CONF = ["REPORTED", "REPORTED", "OFFICIAL", "OFFICIAL",
+             "OFFICIAL", "OFFICIAL", "OFFICIAL", "OFFICIAL",
+             "OFFICIAL", "OFFICIAL"]
+
+HERO_WHY = ["AI doubts reprice Asia's chip giants.",
+            "A first for Pakistan on China's station.",
+            "Alliance business comes to Mar-a-Lago."]
+
+GRID_BANNER = ["4TH PROBED", "500 HIRES", "5 LEADERS", "DAY 2",
+               "3-4K HA", "30.4BN", "PHASE-OUT", "16 DAYS",
+               "15 MINISTRIES", "3 DAYS"]
+
+# Region index per ALSO item (into REGION_COLORS order below).
+ALSO_REGION = [0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,
+               3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6]
+
+SUBHEAD = ("Asian chip rout · Pakistan's first astronaut · "
+           "Trump meets NATO chief")
+
 DATE_CHECK = ["Zelenskyy ship claim — 24 Nov", "Nepal quake — 24 Nov",
               "Gaza Hamas chief — 24 Nov", "Giuliani medal — 24 Nov",
               "COP31 no deal — 24 Nov", "CIA breach — 24 Nov"]
@@ -1062,40 +1095,40 @@ FOOTER_SOURCES = ("Sources: Reuters · WSJ · Yonhap · NATO · European "
 
 # Pins: (story, lon, lat, label, label_dx, label_dy, pin_dx, pin_dy)
 PINS = [
-    (1, 127.0, 37.5, "Seoul", 0, -12, 0, 0),
-    (2, 98.5, 41.0, "Jiuquan", -18, -10, 0, 0),
+    (1, 127.0, 37.5, "", 0, 0, 0, 0),
+    (2, 98.5, 41.0, "", 0, 0, 0, 0),
     (3, -80.0, 27.0, "Florida", -34, 14, 0, 0),
-    (4, 121.5, 31.0, "Shanghai", 8, 16, 0, 0),
+    (4, 121.5, 31.0, "", 0, 0, 0, 0),
     (5, 127.0, 37.5, "", 0, 0, 10, 7),
-    (6, 4.4, 50.8, "Brussels", -26, -12, -4, -2),
+    (6, 4.4, 50.8, "", 0, 0, -4, -2),
     (7, 37.6, 55.8, "Moscow", 10, -10, 0, 0),
-    (8, 148.0, -40.0, "Flinders I.", -24, -10, 0, 0),
-    (9, 7.8, 48.6, "Strasbourg", 12, 2, 4, -1),
-    (10, 149.1, -35.3, "Canberra", 11, -6, 0, 0),
-    (12, 77.2, 28.6, "New Delhi", -20, 14, 0, 0),
-    (13, 6.1, 46.2, "Geneva", -24, 12, 0, 5),
+    (8, 148.0, -40.0, "", 0, 0, 0, 16),
+    (9, 7.8, 48.6, "", 0, 0, 4, -1),
+    (10, 149.1, -35.3, "", 0, 0, 0, 0),
+    (12, 77.2, 28.6, "", 0, 0, 0, 0),
+    (13, 6.1, 46.2, "", 0, 0, 0, 5),
     (14, 125.8, 39.0, "", 0, 0, -7, -7),
-    (15, 127.0, 37.5, "", 0, 0, 14, -2),
+    (15, 127.0, 37.5, "", 0, 0, 20, -8),
     (16, 139.65, 35.68, "", 0, 0, 0, 0),
     (17, 77.21, 28.61, "", 0, 0, 12, -9),
-    (18, 149.1, -35.3, "", 0, 0, -8, -6),
-    (19, 149.1, -35.3, "", 0, 0, 8, -6),
-    (20, 151.2, -33.9, "", 0, 0, 5, 7),
-    (21, 149.1, -35.3, "", 0, 0, 0, 8),
+    (18, 149.1, -35.3, "", 0, 0, -13, -9),
+    (19, 149.1, -35.3, "", 0, 0, 13, -9),
+    (20, 151.2, -33.9, "", 0, 0, 11, 10),
+    (21, 149.1, -35.3, "", 0, 0, -11, 9),
     (22, 150.5, -10.3, "", 0, 0, 0, 0),
     (23, -0.12, 51.5, "", 0, 0, -6, -4),
-    (24, -0.12, 51.5, "", 0, 0, 0, -11),
-    (25, 30.52, 50.45, "", 0, 0, 0, 0),
+    (24, -0.12, 51.5, "", 0, 0, -2, -13),
+    (25, 30.52, 50.45, "", 0, 0, -2, 4),
     (26, -0.12, 51.5, "", 0, 0, -11, 9),
     (27, 13.40, 52.52, "", 0, 0, 8, -6),
     (28, 33.07, 68.97, "", 0, 0, 0, 0),
     (29, -77.04, 38.90, "", 0, 0, -9, -5),
     (30, -77.04, 38.90, "", 0, 0, 10, 7),
     (31, -74.01, 40.71, "", 0, 0, -2, -6),
-    (32, -91.4, 40.8, "", 0, 0, 0, 0),
+    (32, -91.4, 40.8, "", 0, 0, -8, -8),
     (33, -75.51, 10.42, "", 0, 0, 0, 0),
     (34, -47.88, -15.79, "", 0, 0, 0, 0),
-    (35, -74.01, 40.71, "", 0, 0, 12, 12),
+    (35, -74.01, 40.71, "", 0, 0, 16, 16),
     (36, 18.4, -33.9, "", 0, 0, 0, 0),
     (37, 18.4, -33.9, "", 0, 0, 9, -6),
     (38, 31.18, 30.12, "", 0, 0, -9, -6),
@@ -1228,25 +1261,28 @@ def draw_map(c, x, y, w, h, pins):
 
 
 # ---------------------------------------------------------------- layout
+def draw_top_strip(c):
+    c.rect(0, 0, W, 20, NAVY)
+    c.text(24, 14, "THE WORLD IN ONE DAY", SANSB, SANSB_EM, SANSB_ASC,
+           8, PAPER, tracking=1.2)
+    nfields = len(set(FIELDS))
+    c.text_right(W - 24, 14,
+                 "43 STORIES · 7 REGIONS · %d FIELDS · "
+                 "WEDNESDAY 25 NOVEMBER 2026" % nfields,
+                 SANSB, SANSB_EM, SANSB_ASC, 8, PAPER, tracking=0.8)
+
+
 def draw_masthead(c):
-    c.rect(0, 0, W, 96, NAVY)
-    c.hline(0, 96, W, GOLD, 2)
-    c.text(24, 60, "THE WORLD IN 24 HOURS", SERIF, SERIF_EM, SERIF_ASC,
-           44, WHITE)
-    c.text(24, 83, "ONE DAY · ONE PAGE · 43 STORIES", SANSB, SANSB_EM,
-           SANSB_ASC, 10, GOLD, tracking=1.8)
-    c.text_right(W - 24, 32, "WEDNESDAY", SANSB, SANSB_EM, SANSB_ASC,
-                 10.5, GOLD, tracking=2.2)
-    c.text_right(W - 24, 59, "25 NOVEMBER", SERIF, SERIF_EM, SERIF_ASC,
-                 23, WHITE)
-    c.text_right(W - 24, 78, "2026 · ALL TIMES UTC", SANS, SANS_EM,
-                 SANS_ASC, 9.5, (190, 198, 214))
+    c.text_center(W // 2, 74, "Wednesday 25 November 2026", SERIF,
+                  SERIF_EM, SERIF_ASC, 42, INK)
+    c.text_center(W // 2, 94, SUBHEAD, SERIFR, SERIFR_EM, SERIFR_ASC,
+                  13, BURGUNDY)
 
 
 def draw_region_strip(c):
     total = sum(cnt for (_n, cnt, _c) in REGION_COLORS)
     x = 24.0
-    y, h = 106, 15
+    y, h = 104, 15
     for (name, count, col) in REGION_COLORS:
         wseg = (W - 48) * count / total
         c.rect(x, y, wseg, h, col)
@@ -1254,7 +1290,13 @@ def draw_region_strip(c):
         c.text_center(x + wseg / 2, y + 11.5, "%s %d" % (name, count),
                       SANSB, SANSB_EM, SANSB_ASC, 7, tc, tracking=0.2)
         x += wseg
-    c.hline(24, 124, W - 48, HAIR, 0.8)
+    counts = {}
+    for f in FIELDS:
+        counts[f] = counts.get(f, 0) + 1
+    ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+    line = "%d FIELDS · " % len(counts) + " · ".join(
+        "%s %d" % (name, n) for (name, n) in ranked)
+    c.text_center(W // 2, 132, line, SANS, SANS_EM, SANS_ASC, 7.5, INK)
 
 
 def draw_timeline(c):
@@ -1299,6 +1341,15 @@ SCENES = {"markets": hero_markets, "rocket": hero_rocket,
           "villa": hero_villa}
 
 
+def draw_conf_badge(c, right, y, text):
+    col = NAVY if text == "OFFICIAL" else GREY
+    w = text_width(text, SANSB, SANSB_EM, 7.5, 0.8) + 12
+    c.rect(right - w, y, w, 13, col)
+    c.text_center(right - w / 2, y + 10, text, SANSB, SANSB_EM,
+                  SANSB_ASC, 7.5, WHITE, tracking=0.8)
+    return w
+
+
 def draw_hero(c, x, y, w, h, num, hero):
     scene, place, cat, headline, summary, source, chip, _hour, sched = hero
     c.rect(x, y, w, h, WHITE)
@@ -1315,18 +1366,23 @@ def draw_hero(c, x, y, w, h, num, hero):
     ty = y + 134
     c.text(x + 12, ty, place + " · " + cat, SANSB, SANSB_EM, SANSB_ASC,
            9.5, BURGUNDY, tracking=1.0)
+    bw = draw_conf_badge(c, x + w - 12, ty - 9, HERO_CONF[num - 1])
     if sched:
-        draw_badge(c, x + w - 12, ty - 9)
+        draw_badge(c, x + w - 16 - bw, ty - 9)
     ty = c.para(x + 12, ty + 19, headline, SERIF, SERIF_EM, SERIF_ASC,
                 18, INK, w - 24, leading=20)
-    c.para(x + 12, ty + 2, summary, SERIFR, SERIFR_EM, SERIFR_ASC, 12,
-           INK, w - 24, leading=14.5)
+    ty = c.para(x + 12, ty + 2, summary, SERIFR, SERIFR_EM, SERIFR_ASC,
+                12, INK, w - 24, leading=14.5)
+    wx = c.text(x + 12, ty + 4, "WHY IT MATTERS ", SANSB, SANSB_EM,
+                SANSB_ASC, 8, BURGUNDY, tracking=0.4)
+    c.text(wx, ty + 4, HERO_WHY[num - 1], SERIFR, SERIFR_EM, SERIFR_ASC,
+           10.5, INK)
     c.text(x + 12, y + h - 12, source, SANS, SANS_EM, SANS_ASC, 8.5,
            GREY, tracking=0.8)
 
 
 def draw_stats(c):
-    y, h = 440, 56
+    y, h = 140, 56
     c.hline(0, y, W, INK, 2)
     c.hline(0, y + 3, W, GOLD, 0.8)
     c.hline(0, y + h - 3, W, GOLD, 0.8)
@@ -1351,15 +1407,32 @@ def draw_grid_card(c, x, y, w, h, num, item):
                   13, WHITE)
     c.text(x + 29, y + 15, place + " · " + cat, SANSB, SANSB_EM,
            SANSB_ASC, 8.5, BURGUNDY, tracking=0.7)
-    ICONS[icon](c, x + w - 26, y + 3, 18)
-    ty = c.para(x + 12, y + 32, headline, SERIF, SERIF_EM, SERIF_ASC,
-                13, INK, w - 24, leading=15)
+    ICONS[icon](c, x + w - 28, y + 3, 20)
+    banner = GRID_BANNER[num - 4]
+    bw = text_width(banner, SANSB, SANSB_EM, 6.5, 0.4) + 10
+    c.rect(x + w - 8 - bw, y + 25, bw, 11, INK)
+    c.text_center(x + w - 8 - bw / 2, y + 33.5, banner, SANSB, SANSB_EM,
+                  SANSB_ASC, 6.5, WHITE, tracking=0.4)
+    ty = c.para(x + 12, y + 46, headline, SERIF, SERIF_EM, SERIF_ASC,
+                13, INK, w - 24, leading=14)
     c.para(x + 12, ty + 2, summary, SERIFR, SERIFR_EM, SERIFR_ASC, 10,
-           INK, w - 24, leading=12.5)
+           INK, w - 24, leading=11.5)
     if sched:
-        draw_badge(c, x + w - 8, y + h - 14)
-    c.text(x + 12, y + h - 8, source, SANS, SANS_EM, SANS_ASC, 7.5, GREY,
-           tracking=0.6)
+        draw_badge(c, x + w - 8, y + h - 13)
+    sx = c.text(x + 12, y + h - 6, source, SANS, SANS_EM, SANS_ASC,
+                7.5, GREY, tracking=0.6)
+    conf = GRID_CONF[num - 4]
+    letter = {"OFFICIAL": "C", "REPORTED": "R", "CLAIM": "CL"}[conf]
+    ccol = NAVY if conf == "OFFICIAL" else GREY
+    lw = text_width(letter, SANSB, SANSB_EM, 7, 0) + 8
+    if sched:
+        c.rect(x + w - 8 - lw, y + h - 27, lw, 11, ccol)
+        c.text_center(x + w - 8 - lw / 2, y + h - 18.5, letter, SANSB,
+                      SANSB_EM, SANSB_ASC, 7, WHITE)
+    else:
+        c.rect(sx + 5, y + h - 14, lw, 11, ccol)
+        c.text_center(sx + 5 + lw / 2, y + h - 5.5, letter, SANSB,
+                      SANSB_EM, SANSB_ASC, 7, WHITE)
 
 
 REGION_COLORS = [("ASIA", 9, NAVY), ("OCEANIA", 7, (46, 110, 100)),
@@ -1369,14 +1442,29 @@ REGION_COLORS = [("ASIA", 9, NAVY), ("OCEANIA", 7, (46, 110, 100)),
                  ("GLOBAL", 2, (110, 80, 140))]
 
 
-def draw_also(c):
-    c.text(24, 718, "ALSO ON WEDNESDAY 25 NOVEMBER", SANSB, SANSB_EM,
+def draw_bottom(c):
+    c.text(24, 696, "WHERE IT HAPPENED", SANSB, SANSB_EM, SANSB_ASC, 11,
+           INK, tracking=1.2)
+    c.text_right(384, 696, "dots = story numbers", SANS, SANS_EM,
+                 SANS_ASC, 8.5, GREY)
+    draw_map(c, 24, 704, 360, 158, PINS)
+    c.text(24, 876, "BY REGION", SANSB, SANSB_EM, SANSB_ASC, 9, NAVY,
+           tracking=1.0)
+    c.text(96, 876, "Nos. 11 & 43 global, no pin", SANS, SANS_EM,
+           SANS_ASC, 8, GREY)
+    for i, (name, count, col) in enumerate(REGION_COLORS):
+        lx = 24 if i < 4 else 204
+        ry = 888 + (i % 4) * 12
+        c.rect(lx, ry - 7, 9, 9, col)
+        c.text(lx + 14, ry, "%s — %d" % (name, count), SANS, SANS_EM,
+               SANS_ASC, 8.5, INK)
+    c.text(400, 696, "ALSO ON WEDNESDAY 25 NOVEMBER", SANSB, SANSB_EM,
            SANSB_ASC, 11, INK, tracking=1.2)
-    c.text_right(W - 24, 718, "30 more verified stories", SANS, SANS_EM,
+    c.text_right(W - 24, 696, "30 more verified stories", SANS, SANS_EM,
                  SANS_ASC, 9, GREY)
-    c.hline(24, 724, W - 48, HAIR, 0.8)
-    cols = [24, 357, 690]
-    rows = [10, 10, 10]
+    c.hline(400, 702, W - 424, HAIR, 0.8)
+    cols = [400, 706]
+    rows = [15, 15]
     i = 0
     for ci, nrows in enumerate(rows):
         for r in range(nrows):
@@ -1384,59 +1472,47 @@ def draw_also(c):
             num = i + 14
             i += 1
             x0 = cols[ci]
-            yy = 736 + r * 9.25
-            c.text(x0, yy, str(num), SANSB, SANSB_EM, SANSB_ASC, 8.5,
+            yy = 718 + r * 12
+            c.text(x0, yy, str(num), SANSB, SANSB_EM, SANSB_ASC, 7.8,
                    BURGUNDY)
+            pcol = REGION_COLORS[ALSO_REGION[num - 14]][2]
+            if pcol == GOLD:
+                pcol = (150, 115, 20)
             nx = c.text(x0 + 22, yy, place + ": ", SANSB, SANSB_EM,
-                        SANSB_ASC, 8.5, INK)
-            c.text(nx, yy, head, SANS, SANS_EM, SANS_ASC, 8.5, INK)
-
-
-def draw_map_band(c):
-    c.text(24, 830, "WHERE IT HAPPENED", SANSB, SANSB_EM, SANSB_ASC, 12,
-           INK, tracking=1.2)
-    c.text_right(664, 830, "Pins = story numbers", SANS, SANS_EM,
-                 SANS_ASC, 9, GREY)
-    draw_map(c, 24, 838, 640, 86, PINS)
-    c.text(688, 848, "BY REGION", SANSB, SANSB_EM, SANSB_ASC, 10, NAVY,
-           tracking=1.0)
-    for i, (name, count, col) in enumerate(REGION_COLORS):
-        lx = 688 if i < 4 else 842
-        ry = 862 + (i % 4) * 13
-        c.rect(lx, ry - 8, 10, 10, col)
-        c.text(lx + 16, ry, "%s — %d" % (name, count), SANS, SANS_EM,
-               SANS_ASC, 9.5, INK)
-    c.text(688, 918, "Nos. 11 & 43 are global — no pin.", SANS, SANS_EM,
-           SANS_ASC, 8.5, GREY)
+                        SANSB_ASC, 7.8, pcol)
+            hx = c.text(nx, yy, head, SANS, SANS_EM, SANS_ASC, 7.8, INK)
+            if num == 40:
+                c.text(hx + 4, yy, "CLAIM", SANSB, SANSB_EM, SANSB_ASC,
+                       7, BURGUNDY)
 
 
 def draw_datecheck(c):
-    y, h = 932, 50
+    y, h = 926, 56
     c.rect(24, y, W - 48, h, CREAM2)
-    c.frame(24, y, W - 48, h, BURGUNDY, 1.2)
-    c.rect(24, y, 150, h, BURGUNDY)
-    c.text_center(99, y + 24, "DATE CHECK", SERIF, SERIF_EM, SERIF_ASC,
-                  15, WHITE)
-    c.text_center(99, y + 36, "Excluded as the", SANS, SANS_EM, SANS_ASC,
-                  8, PAPER)
-    c.text_center(99, y + 46, "wrong day", SANS, SANS_EM, SANS_ASC, 8,
-                  PAPER)
-    colw = (W - 48 - 150 - 24) // 2
+    c.frame(24, y, W - 48, h, BURGUNDY, 1.5)
+    c.text(36, y + 24, "DATE CHECK", SERIF, SERIF_EM, SERIF_ASC, 14,
+           BURGUNDY)
+    c.para(36, y + 38, FOOTER, SANS, SANS_EM, SANS_ASC, 8, INK, 308,
+           leading=10.5)
+    colw = 318
     for i, item in enumerate(DATE_CHECK):
         col = i // 3
         row = i % 3
-        ix = 186 + col * colw
+        ix = 362 + col * colw
         iy = y + 16 + row * 13
         c.text(ix, iy, "X", SANSB, SANSB_EM, SANSB_ASC, 8.5, BURGUNDY)
-        c.text(ix + 12, iy, item, SANS, SANS_EM, SANS_ASC, 9, INK)
+        c.text(ix + 12, iy, item, SANS, SANS_EM, SANS_ASC, 8.5, INK)
 
 
 def draw_footer(c):
-    c.text_center(W // 2, 992, FOOTER, SANS, SANS_EM, SANS_ASC, 9.5, GREY)
-    c.text_center(W // 2, 1004, FOOTER2, SANS, SANS_EM, SANS_ASC, 9.5,
+    c.text_center(W // 2, 994,
+                  "OFFICIAL = official record · REPORTED = wire report "
+                  "· CLAIM = one side's statement · C/R on grid cards",
+                  SANS, SANS_EM, SANS_ASC, 8, GREY)
+    c.text_center(W // 2, 1006, FOOTER2, SANS, SANS_EM, SANS_ASC, 8.5,
                   GREY)
     c.text_center(W // 2, 1018, FOOTER_SOURCES, SANSB, SANSB_EM,
-                  SANSB_ASC, 8, INK, tracking=0.3)
+                  SANSB_ASC, 7.5, INK, tracking=0.2)
 
 
 def _validate():
@@ -1444,18 +1520,26 @@ def _validate():
     any text would overflow its card, or the story numbering is off.
     Runs before drawing, so a bad string can never reach the image."""
     fonts = [SERIF, SERIFR, SANSB, SANS]
-    strings = ["THE WORLD IN 24 HOURS", "ONE DAY · ONE PAGE · 43 STORIES",
-               "WEDNESDAY", "25 NOVEMBER", "2026 · ALL TIMES UTC",
-               REGION_STRIP, "THE DAY IN UTC",
-               "Dots mark the three lead stories at their hour",
+    _counts = {}
+    for _f in FIELDS:
+        _counts[_f] = _counts.get(_f, 0) + 1
+    _ranked = sorted(_counts.items(), key=lambda kv: (-kv[1], kv[0]))
+    fields_line = "%d FIELDS · " % len(_counts) + " · ".join(
+        "%s %d" % (name, n) for (name, n) in _ranked)
+    top_right = ("43 STORIES · 7 REGIONS · %d FIELDS · "
+                 "WEDNESDAY 25 NOVEMBER 2026" % len(_counts))
+    strings = ["THE WORLD IN ONE DAY", top_right,
+               "Wednesday 25 November 2026", SUBHEAD, fields_line,
                "ALSO ON WEDNESDAY 25 NOVEMBER",
                "30 more verified stories",
-               "WHERE IT HAPPENED", "Pins = story numbers", "BY REGION",
-               "Nos. 11 & 43 are global — no pin.", "DATE CHECK",
-               "Excluded as the", "wrong day", "SCHEDULED", "X",
+               "WHERE IT HAPPENED", "dots = story numbers", "BY REGION",
+               "Nos. 11 & 43 global, no pin", "DATE CHECK",
+               "SCHEDULED", "X", "WHY IT MATTERS ", "CLAIM", "C", "R",
+               "OFFICIAL = official record · REPORTED = wire report "
+               "· CLAIM = one side's statement · C/R on grid cards",
                FOOTER, FOOTER2, FOOTER_SOURCES]
-    strings += TIMELINE_BLOCKS + DATE_CHECK
-    strings += ["%02d" % h for h in (0, 6, 12, 18, 24)]
+    strings += DATE_CHECK + HERO_WHY + GRID_BANNER
+    strings += HERO_CONF + GRID_CONF
     strings += [str(n) for n in range(1, 44)]
     for (_sc, place, cat, head, summ, src, chip, _h, _s) in HEROES:
         strings += [place, cat, head, summ, src, chip]
@@ -1477,12 +1561,17 @@ def _validate():
     for (_sc, _p, _c, head, summ, _src, _chip, _h, _s) in HEROES:
         assert len(wrap_text(head, SERIF, SERIF_EM, 18, 304)) <= 2, head
         assert len(wrap_text(summ, SERIFR, SERIFR_EM, 12, 304)) <= 2, summ
-    for (_ic, _p, _c, head, summ, _src, _s) in GRID:
+    for why in HERO_WHY:
+        assert text_width("WHY IT MATTERS ", SANSB, SANSB_EM, 8, 0.4) + \
+            text_width(why, SERIFR, SERIFR_EM, 10.5) <= 304, why
+    for gi, (_ic, _p, _c, head, summ, _src, _s) in enumerate(GRID):
         assert len(wrap_text(head, SERIF, SERIF_EM, 13, 168)) <= 2, head
+        assert text_width(GRID_BANNER[gi], SANSB, SANSB_EM, 6.5, 0.4) \
+            <= 70, GRID_BANNER[gi]
         assert len(wrap_text(summ, SERIFR, SERIFR_EM, 10, 168)) <= 2, summ
     for (place, head) in ALSO:
         line = place + ": " + head
-        assert text_width(line, SANSB, SANSB_EM, 8.5) <= 295, line
+        assert text_width(line, SANSB, SANSB_EM, 7.8) <= 268, line
     for (_num, label) in STATS:
         assert text_width(label, SANS, SANS_EM, 8, 0.6) <= 204, label
     _total = sum(cnt for (_n, cnt, _c) in REGION_COLORS)
@@ -1490,11 +1579,19 @@ def _validate():
         _seg = (W - 48) * count / _total
         assert text_width("%s %d" % (name, count), SANSB, SANSB_EM, 7,
                           0.2) <= _seg - 4, name
-    assert text_width(FOOTER_SOURCES, SANSB, SANSB_EM, 8, 0.3) <= CW
-    for lab in TIMELINE_BLOCKS:
-        assert text_width(lab, SANSB, SANSB_EM, 9, 0.6) <= 238, lab
+    assert text_width(FOOTER_SOURCES, SANSB, SANSB_EM, 7.5, 0.2) <= CW
+    assert text_width(fields_line, SANS, SANS_EM, 7.5) <= CW
+    assert text_width(top_right, SANSB, SANSB_EM, 8, 0.8) <= 720
+    assert text_width("Wednesday 25 November 2026", SERIF, SERIF_EM,
+                      42) <= CW
+    assert text_width(SUBHEAD, SERIFR, SERIFR_EM, 13) <= CW
+    assert len(wrap_text(FOOTER, SANS, SANS_EM, 8, 308)) <= 3
     for item in DATE_CHECK:
-        assert text_width(item, SANS, SANS_EM, 9) <= 389, item
+        assert text_width(item, SANS, SANS_EM, 8.5) <= 300, item
+    assert len(FIELDS) == 43 and len(ALSO_REGION) == 30
+    assert len(HERO_WHY) == 3 and len(GRID_BANNER) == 10
+    assert all(v in ("OFFICIAL", "REPORTED", "CLAIM")
+               for v in HERO_CONF + GRID_CONF)
     assert len(HEROES) == 3 and len(GRID) == 10 and len(ALSO) == 30
     assert len(PINS) == 41 and len(DATE_CHECK) == 6
     assert sum(cnt for (_n, cnt, _c) in REGION_COLORS) == 43
@@ -1505,18 +1602,17 @@ def _validate():
 
 def build():
     c = Canvas(W, H, PAPER)
+    draw_top_strip(c)
     draw_masthead(c)
     draw_region_strip(c)
-    draw_timeline(c)
-    for i, hero in enumerate(HEROES):
-        draw_hero(c, 12 + i * 336, 200, 328, 234, i + 1, hero)
     draw_stats(c)
+    for i, hero in enumerate(HEROES):
+        draw_hero(c, 12 + i * 336, 204, 328, 258, i + 1, hero)
     for i, item in enumerate(GRID):
         gx = 12 + (i % 5) * 200
-        gy = 502 + (i // 5) * 104
-        draw_grid_card(c, gx, gy, 192, 96, i + 4, item)
-    draw_also(c)
-    draw_map_band(c)
+        gy = 470 + (i // 5) * 108
+        draw_grid_card(c, gx, gy, 192, 104, i + 4, item)
+    draw_bottom(c)
     draw_datecheck(c)
     draw_footer(c)
     return c
