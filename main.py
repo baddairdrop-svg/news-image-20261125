@@ -1015,6 +1015,7 @@ ALSO = [
     ("South Korea", "births up 12.2%, 9-month fastest since 1981"),
     ("Tokyo", "Tashima vows one term if elected FIFA president"),
     ("New Delhi", "India approves 1.2bn equipment incentive plan"),
+    ("Beijing", "Wang Yi presses Netherlands on Nexperia"),
     ("Canberra", "inflation hits 4.9%, core 3.8%"),
     ("Canberra", "Big Tech duty-of-care law passed"),
     ("Sydney", "ex-policeman guilty of double murder"),
@@ -1026,6 +1027,8 @@ ALSO = [
     ("London", "Ofgem raises energy price cap 26%"),
     ("Berlin", "Merz warns Russia wants more than Ukraine"),
     ("Murmansk", "governor placed in pre-trial detention"),
+    ("Lille", "stun Bayern 2-1 in Champions League"),
+    ("The Hague", "34 nations urge Russia to halt riot gas"),
     ("Washington", "US proposes new tariffs on 14 partners"),
     ("Washington", "second judge blocks birthright order"),
     ("New York", "Wall Street closes mixed after AI rout"),
@@ -1033,26 +1036,33 @@ ALSO = [
     ("Cartagena", "forces rescue all supermarket hostages"),
     ("Brasilia", "US proposes 10% duty on Brazilian aircraft"),
     ("New York", "Macy's parade postponed for first time"),
+    ("Washington", "nine Ukrainian children reunited"),
     ("Cape Town", "Naspers earnings rise 12%"),
     ("Cape Town", "Ramaphosa wins Farmgate court bid"),
     ("Giza", "31 killed in tanker fire near Cairo"),
     ("Lagos", "Dangote refinery shares to trade from Dec 1"),
+    ("Dakar", "parliament votes 128-9 against Faye budget"),
+    ("Bunia", "UN evacuates 10 Ebola health workers"),
     ("Ras Tanura", "Houthis claim refinery attack"),
     ("Amman", "man sentenced to death over killing"),
     ("Jerusalem", "opposition advances Oct 7 probe vote"),
+    ("Hasaka", "IS attack kills two Syrian security staff"),
+    ("Baghdad", "court backs troops at Kurdistan borders"),
     ("Space", "Hera releases its first Dimorphos images"),
 ]
 
-# Fields per story 1-43 (computed counts drive the fields line).
+# Fields per story 1-51 (computed counts drive the fields line).
 FIELDS = ["Markets", "Space", "Diplomacy",
           "Politics", "Labour", "Diplomacy", "Diplomacy", "Disaster",
           "Migration", "Security", "Rights", "Rights", "Rights",
-          "Diplomacy", "Society", "Sport", "Economy", "Economy",
-          "Tech", "Justice", "Rights", "Humanitarian", "Business",
-          "Health", "War", "Energy", "Politics", "Justice", "Trade",
-          "Justice", "Markets", "Security", "Crime", "Trade",
-          "Culture", "Business", "Justice", "Disaster", "Business",
-          "War", "Justice", "Politics", "Space"]
+          "Diplomacy", "Society", "Sport", "Economy", "Diplomacy",
+          "Economy", "Tech", "Justice", "Rights", "Humanitarian",
+          "Business", "Health", "War", "Energy", "Politics",
+          "Justice", "Sport", "Diplomacy", "Trade", "Justice",
+          "Markets", "Security", "Crime", "Trade", "Culture",
+          "Rights", "Business", "Justice", "Disaster", "Business",
+          "Politics", "Humanitarian", "War", "Justice", "Politics",
+          "War", "Politics", "Space"]
 
 # Confidence per hero / grid story: OFFICIAL = official record or
 # statement, REPORTED = wire report, CLAIM = one side's statement.
@@ -1070,8 +1080,9 @@ GRID_BANNER = ["4TH PROBED", "500 HIRES", "5 LEADERS", "DAY 2",
                "15 MINISTRIES", "3 DAYS"]
 
 # Region index per ALSO item (into REGION_COLORS order below).
-ALSO_REGION = [0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,
-               3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6]
+ALSO_REGION = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+               3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5,
+               5, 6]
 
 SUBHEAD = ("Asian chip rout · Pakistan's first astronaut · "
            "Trump meets NATO chief")
@@ -1099,7 +1110,7 @@ PINS = [
     (2, 98.5, 41.0, "", 0, 0, 0, 0),
     (3, -80.0, 27.0, "Florida", -34, 14, 0, 0),
     (4, 121.5, 31.0, "", 0, 0, 0, 0),
-    (5, 127.0, 37.5, "", 0, 0, 10, 7),
+    (5, 127.0, 37.5, "", 0, 0, 8, 12),
     (6, 4.4, 50.8, "", 0, 0, -4, -2),
     (7, 37.6, 55.8, "Moscow", 10, -10, 0, 0),
     (8, 148.0, -40.0, "", 0, 0, 0, 16),
@@ -1111,31 +1122,39 @@ PINS = [
     (15, 127.0, 37.5, "", 0, 0, 20, -8),
     (16, 139.65, 35.68, "", 0, 0, 0, 0),
     (17, 77.21, 28.61, "", 0, 0, 12, -9),
-    (18, 149.1, -35.3, "", 0, 0, -13, -9),
-    (19, 149.1, -35.3, "", 0, 0, 13, -9),
-    (20, 151.2, -33.9, "", 0, 0, 11, 10),
-    (21, 149.1, -35.3, "", 0, 0, -11, 9),
-    (22, 150.5, -10.3, "", 0, 0, 0, 0),
-    (23, -0.12, 51.5, "", 0, 0, -6, -4),
-    (24, -0.12, 51.5, "", 0, 0, -2, -13),
-    (25, 30.52, 50.45, "", 0, 0, -2, 4),
-    (26, -0.12, 51.5, "", 0, 0, -11, 9),
-    (27, 13.40, 52.52, "", 0, 0, 8, -6),
-    (28, 33.07, 68.97, "", 0, 0, 0, 0),
-    (29, -77.04, 38.90, "", 0, 0, -9, -5),
-    (30, -77.04, 38.90, "", 0, 0, 10, 7),
-    (31, -74.01, 40.71, "", 0, 0, -2, -6),
-    (32, -91.4, 40.8, "", 0, 0, -8, -8),
-    (33, -75.51, 10.42, "", 0, 0, 0, 0),
-    (34, -47.88, -15.79, "", 0, 0, 0, 0),
-    (35, -74.01, 40.71, "", 0, 0, 16, 16),
-    (36, 18.4, -33.9, "", 0, 0, 0, 0),
-    (37, 18.4, -33.9, "", 0, 0, 9, -6),
-    (38, 31.18, 30.12, "", 0, 0, -9, -6),
-    (39, 3.39, 6.45, "", 0, 0, 0, 0),
-    (40, 50.2, 26.6, "", 0, 0, 0, 0),
-    (41, 35.9, 31.9, "", 0, 0, 8, -5),
-    (42, 35.21, 31.77, "", 0, 0, -8, 5),
+    (18, 116.40, 39.90, "", 0, 0, -4, -6),
+    (19, 149.1, -35.3, "", 0, 0, -13, -9),
+    (20, 149.1, -35.3, "", 0, 0, 13, -9),
+    (21, 151.2, -33.9, "", 0, 0, 11, 10),
+    (22, 149.1, -35.3, "", 0, 0, -11, 9),
+    (23, 150.5, -10.3, "", 0, 0, 0, 0),
+    (24, -0.12, 51.5, "", 0, 0, -6, -4),
+    (25, -0.12, 51.5, "", 0, 0, -2, -13),
+    (26, 30.52, 50.45, "", 0, 0, -2, 4),
+    (27, -0.12, 51.5, "", 0, 0, -11, 9),
+    (28, 13.40, 52.52, "", 0, 0, 8, -6),
+    (29, 33.07, 68.97, "", 0, 0, 0, 0),
+    (30, 3.06, 50.63, "", 0, 0, 14, 12),
+    (31, 4.30, 52.07, "", 0, 0, 6, -16),
+    (32, -77.04, 38.90, "", 0, 0, -9, -5),
+    (33, -77.04, 38.90, "", 0, 0, 10, 7),
+    (34, -74.01, 40.71, "", 0, 0, -2, -6),
+    (35, -91.4, 40.8, "", 0, 0, -8, -8),
+    (36, -75.51, 10.42, "", 0, 0, 0, 0),
+    (37, -47.88, -15.79, "", 0, 0, 0, 0),
+    (38, -74.01, 40.71, "", 0, 0, 16, 16),
+    (39, -77.04, 38.90, "", 0, 0, -14, 10),
+    (40, 18.4, -33.9, "", 0, 0, 0, 0),
+    (41, 18.4, -33.9, "", 0, 0, 9, -6),
+    (42, 31.18, 30.12, "", 0, 0, -9, -6),
+    (43, 3.39, 6.45, "", 0, 0, 0, 0),
+    (44, -17.45, 14.69, "", 0, 0, 0, 0),
+    (45, 30.25, 1.57, "", 0, 0, 0, 0),
+    (46, 50.2, 26.6, "", 0, 0, 0, 0),
+    (47, 35.9, 31.9, "", 0, 0, 8, -5),
+    (48, 35.21, 31.77, "", 0, 0, -8, 5),
+    (49, 40.74, 36.51, "", 0, 0, 10, -8),
+    (50, 44.37, 33.31, "", 0, 0, 18, 16),
 ]
 
 # Coarse land rectangles (lon_min, lon_max, lat_min, lat_max).
@@ -1267,8 +1286,8 @@ def draw_top_strip(c):
            8, PAPER, tracking=1.2)
     nfields = len(set(FIELDS))
     c.text_right(W - 24, 14,
-                 "43 STORIES · 7 REGIONS · %d FIELDS · "
-                 "WEDNESDAY 25 NOVEMBER 2026" % nfields,
+                 "%d STORIES · 7 REGIONS · %d FIELDS · "
+                 "WEDNESDAY 25 NOVEMBER 2026" % (len(FIELDS), nfields),
                  SANSB, SANSB_EM, SANSB_ASC, 8, PAPER, tracking=0.8)
 
 
@@ -1288,7 +1307,7 @@ def draw_region_strip(c):
         c.rect(x, y, wseg, h, col)
         tc = INK if col == GOLD else WHITE
         c.text_center(x + wseg / 2, y + 11.5, "%s %d" % (name, count),
-                      SANSB, SANSB_EM, SANSB_ASC, 7, tc, tracking=0.2)
+                      SANSB, SANSB_EM, SANSB_ASC, 6.2, tc, tracking=0.1)
         x += wseg
     counts = {}
     for f in FIELDS:
@@ -1435,10 +1454,10 @@ def draw_grid_card(c, x, y, w, h, num, item):
                       SANSB_EM, SANSB_ASC, 7, WHITE)
 
 
-REGION_COLORS = [("ASIA", 9, NAVY), ("OCEANIA", 7, (46, 110, 100)),
-                 ("EUROPE", 10, BURGUNDY), ("AMERICAS", 8, GOLD),
-                 ("AFRICA", 4, (160, 90, 30)),
-                 ("MIDDLE EAST", 3, (140, 60, 90)),
+REGION_COLORS = [("ASIA", 10, NAVY), ("OCEANIA", 7, (46, 110, 100)),
+                 ("EUROPE", 12, BURGUNDY), ("AMERICAS", 9, GOLD),
+                 ("AFRICA", 6, (160, 90, 30)),
+                 ("MIDDLE EAST", 5, (140, 60, 90)),
                  ("GLOBAL", 2, (110, 80, 140))]
 
 
@@ -1450,7 +1469,7 @@ def draw_bottom(c):
     draw_map(c, 24, 704, 360, 158, PINS)
     c.text(24, 876, "BY REGION", SANSB, SANSB_EM, SANSB_ASC, 9, NAVY,
            tracking=1.0)
-    c.text(96, 876, "Nos. 11 & 43 global, no pin", SANS, SANS_EM,
+    c.text(96, 876, "Nos. 11 & 51 global, no pin", SANS, SANS_EM,
            SANS_ASC, 8, GREY)
     for i, (name, count, col) in enumerate(REGION_COLORS):
         lx = 24 if i < 4 else 204
@@ -1460,11 +1479,11 @@ def draw_bottom(c):
                SANS_ASC, 8.5, INK)
     c.text(400, 696, "ALSO ON WEDNESDAY 25 NOVEMBER", SANSB, SANSB_EM,
            SANSB_ASC, 11, INK, tracking=1.2)
-    c.text_right(W - 24, 696, "30 more verified stories", SANS, SANS_EM,
+    c.text_right(W - 24, 696, "38 more verified stories", SANS, SANS_EM,
                  SANS_ASC, 9, GREY)
     c.hline(400, 702, W - 424, HAIR, 0.8)
     cols = [400, 706]
-    rows = [15, 15]
+    rows = [19, 19]
     i = 0
     for ci, nrows in enumerate(rows):
         for r in range(nrows):
@@ -1472,7 +1491,7 @@ def draw_bottom(c):
             num = i + 14
             i += 1
             x0 = cols[ci]
-            yy = 718 + r * 12
+            yy = 718 + r * 10.5
             c.text(x0, yy, str(num), SANSB, SANSB_EM, SANSB_ASC, 7.8,
                    BURGUNDY)
             pcol = REGION_COLORS[ALSO_REGION[num - 14]][2]
@@ -1481,7 +1500,7 @@ def draw_bottom(c):
             nx = c.text(x0 + 22, yy, place + ": ", SANSB, SANSB_EM,
                         SANSB_ASC, 7.8, pcol)
             hx = c.text(nx, yy, head, SANS, SANS_EM, SANS_ASC, 7.8, INK)
-            if num == 40:
+            if num == 46:
                 c.text(hx + 4, yy, "CLAIM", SANSB, SANSB_EM, SANSB_ASC,
                        7, BURGUNDY)
 
@@ -1526,21 +1545,22 @@ def _validate():
     _ranked = sorted(_counts.items(), key=lambda kv: (-kv[1], kv[0]))
     fields_line = "%d FIELDS · " % len(_counts) + " · ".join(
         "%s %d" % (name, n) for (name, n) in _ranked)
-    top_right = ("43 STORIES · 7 REGIONS · %d FIELDS · "
-                 "WEDNESDAY 25 NOVEMBER 2026" % len(_counts))
+    top_right = ("%d STORIES · 7 REGIONS · %d FIELDS · "
+                 "WEDNESDAY 25 NOVEMBER 2026"
+                 % (len(FIELDS), len(_counts)))
     strings = ["THE WORLD IN ONE DAY", top_right,
                "Wednesday 25 November 2026", SUBHEAD, fields_line,
                "ALSO ON WEDNESDAY 25 NOVEMBER",
-               "30 more verified stories",
+               "38 more verified stories",
                "WHERE IT HAPPENED", "dots = story numbers", "BY REGION",
-               "Nos. 11 & 43 global, no pin", "DATE CHECK",
+               "Nos. 11 & 51 global, no pin", "DATE CHECK",
                "SCHEDULED", "X", "WHY IT MATTERS ", "CLAIM", "C", "R",
                "OFFICIAL = official record · REPORTED = wire report "
                "· CLAIM = one side's statement · C/R on grid cards",
                FOOTER, FOOTER2, FOOTER_SOURCES]
     strings += DATE_CHECK + HERO_WHY + GRID_BANNER
     strings += HERO_CONF + GRID_CONF
-    strings += [str(n) for n in range(1, 44)]
+    strings += [str(n) for n in range(1, 52)]
     for (_sc, place, cat, head, summ, src, chip, _h, _s) in HEROES:
         strings += [place, cat, head, summ, src, chip]
     for (num, label) in STATS:
@@ -1577,8 +1597,8 @@ def _validate():
     _total = sum(cnt for (_n, cnt, _c) in REGION_COLORS)
     for (name, count, _col) in REGION_COLORS:
         _seg = (W - 48) * count / _total
-        assert text_width("%s %d" % (name, count), SANSB, SANSB_EM, 7,
-                          0.2) <= _seg - 4, name
+        assert text_width("%s %d" % (name, count), SANSB, SANSB_EM, 6.2,
+                          0.1) <= _seg - 3, name
     assert text_width(FOOTER_SOURCES, SANSB, SANSB_EM, 7.5, 0.2) <= CW
     assert text_width(fields_line, SANS, SANS_EM, 7.5) <= CW
     assert text_width(top_right, SANSB, SANSB_EM, 8, 0.8) <= 720
@@ -1588,16 +1608,16 @@ def _validate():
     assert len(wrap_text(FOOTER, SANS, SANS_EM, 8, 308)) <= 3
     for item in DATE_CHECK:
         assert text_width(item, SANS, SANS_EM, 8.5) <= 300, item
-    assert len(FIELDS) == 43 and len(ALSO_REGION) == 30
+    assert len(FIELDS) == 51 and len(ALSO_REGION) == 38
     assert len(HERO_WHY) == 3 and len(GRID_BANNER) == 10
     assert all(v in ("OFFICIAL", "REPORTED", "CLAIM")
                for v in HERO_CONF + GRID_CONF)
-    assert len(HEROES) == 3 and len(GRID) == 10 and len(ALSO) == 30
-    assert len(PINS) == 41 and len(DATE_CHECK) == 6
-    assert sum(cnt for (_n, cnt, _c) in REGION_COLORS) == 43
+    assert len(HEROES) == 3 and len(GRID) == 10 and len(ALSO) == 38
+    assert len(PINS) == 49 and len(DATE_CHECK) == 6
+    assert sum(cnt for (_n, cnt, _c) in REGION_COLORS) == 51
     assert sum(1 for h in HEROES if h[8]) + \
         sum(1 for g in GRID if g[6]) == 6
-    assert all(p[0] not in (11, 43) for p in PINS)
+    assert all(p[0] not in (11, 51) for p in PINS)
 
 
 def build():
